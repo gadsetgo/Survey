@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink:          #1a1208;
+  --paper:        #fdf8f0;
+  --surface:      #fff9ef;
+  --amber:        #e88c2a;
+  --amber-light:  #fdf0d5;
+  --amber-mid:    #f5d48a;
+  --amber-dark:   #b06a10;
+  --teal:         #1d7a6b;
+  --teal-light:   #e0f4f0;
+  --coral:        #d95f3b;
+  --coral-light:  #fdeee9;
+  --violet:       #5c4db1;
+  --violet-light: #eeeafb;
+  --muted:        #8a7d6a;
+  --border:       #e8dcc8;
+  --sage:         #3d6b4f;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--paper);
+  color: var(--ink);
+}
+
+/* ── Custom range slider ── */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  outline: none;
+  cursor: pointer;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
+}
+
+input[type='range']::-webkit-slider-thumb:hover {
+  background: var(--amber);
+  border-color: var(--amber);
+  transform: scale(1.15);
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+input[type='range']::-moz-range-thumb:hover {
+  background: var(--amber);
+  border-color: var(--amber);
+}
+
+/* ── Progress bar ── */
+.progress-bar {
+  height: 3px;
+  background: var(--border);
+  width: 100%;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--amber);
+  transition: width 0.4s ease;
+}
+
+/* ── Animations ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.35s ease forwards;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 1.4s step-end infinite;
+}
+
+/* ── Orb pulse for processing screen ── */
+@keyframes orbPulse {
+  0%, 100% { transform: scale(1);   opacity: 0.6; }
+  50%      { transform: scale(1.08); opacity: 1; }
+}
+
+.animate-orb {
+  animation: orbPulse 2s ease-in-out infinite;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--paper);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
