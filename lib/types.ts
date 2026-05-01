@@ -1,23 +1,23 @@
 export interface Skills {
   // Technical
-  data_pipelines: number
-  sql_fluency: number
+  pipelines: number
+  sql: number
   python: number
-  cloud_platforms: number
-  ai_llm_tools: number
-  data_modeling: number
+  cloud: number
+  ai_tools: number
+  modeling: number
   // Domain & Functional
-  data_governance: number
-  data_quality: number
-  analytics_bi: number
-  regulatory: number
-  // Soft Skills
-  stakeholder_comms: number
-  business_domain: number
-  problem_framing: number
-  mentoring: number
-  change_management: number
-  product_thinking: number
+  governance: number
+  dq: number
+  metadata: number
+  bi_delivery: number
+  compliance: number
+  domain: number
+  // Soft & Cross-functional
+  stakeholders: number
+  framing: number
+  storytelling: number
+  strategic: number
 }
 
 export type SkillKey = keyof Skills
@@ -27,6 +27,7 @@ export interface RoleDestination {
   title: string
   rationale: string
   key_skills: string[]
+  categories?: string[]  // e.g. ['AN', 'GV'] for mini-Venn
 }
 
 export interface RoadmapStep {

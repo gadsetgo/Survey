@@ -3,12 +3,7 @@
 import type { SkillKey } from '@/lib/types'
 
 const BADGE_LABELS: Record<number, string> = {
-  0: 'none',
-  1: 'beginner',
-  2: 'familiar',
-  3: 'solid',
-  4: 'strong',
-  5: 'expert',
+  0: 'none', 1: 'beginner', 2: 'familiar', 3: 'solid', 4: 'strong', 5: 'expert',
 }
 
 interface Props {
@@ -19,28 +14,23 @@ interface Props {
 }
 
 export default function SkillSlider({ skillKey, label, value, onChange }: Props) {
+  const pct = (value / 5) * 100
   return (
-    <div className="flex items-center gap-4 py-2 min-h-[44px]">
-      <span className="text-sm text-ink w-44 flex-shrink-0">{label}</span>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 0', minHeight: 44 }}>
+      <span style={{ fontSize: 13, flex: 1 }}>{label}</span>
       <input
-        type="range"
-        min={0}
-        max={5}
-        step={1}
-        value={value}
+        type="range" min={0} max={5} step={1} value={value}
         onChange={(e) => onChange(skillKey, parseInt(e.target.value, 10))}
-        className="flex-1"
         style={{
-          background: `linear-gradient(to right, var(--amber) 0%, var(--amber) ${(value / 5) * 100}%, var(--border) ${(value / 5) * 100}%, var(--border) 100%)`,
+          flex: 2,
+          background: `linear-gradient(to right, #e88c2a 0%, #e88c2a ${pct}%, #e8dcc8 ${pct}%, #e8dcc8 100%)`,
         }}
       />
-      <span
-        className="text-xs font-medium rounded-full px-2.5 py-0.5 w-16 text-center flex-shrink-0"
-        style={{
-          backgroundColor: value === 0 ? 'var(--border)' : 'var(--amber-light)',
-          color: value === 0 ? 'var(--muted)' : 'var(--amber-dark)',
-        }}
-      >
+      <span style={{
+        fontSize: 11, fontWeight: 500, borderRadius: 999, padding: '2px 8px', width: 60, textAlign: 'center',
+        background: value === 0 ? '#e8dcc8' : '#fdf0d5',
+        color: value === 0 ? '#8a7d6a' : '#b06a10',
+      }}>
         {BADGE_LABELS[value]}
       </span>
     </div>

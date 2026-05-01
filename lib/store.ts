@@ -2,22 +2,22 @@ import { create } from 'zustand'
 import type { SurveyState, SurveyActions, SkillKey, ApiResponse } from './types'
 
 const DEFAULT_SKILLS: SurveyState['skills'] = {
-  data_pipelines: 0,
-  sql_fluency: 0,
+  pipelines: 0,
+  sql: 0,
   python: 0,
-  cloud_platforms: 0,
-  ai_llm_tools: 0,
-  data_modeling: 0,
-  data_governance: 0,
-  data_quality: 0,
-  analytics_bi: 0,
-  regulatory: 0,
-  stakeholder_comms: 0,
-  business_domain: 0,
-  problem_framing: 0,
-  mentoring: 0,
-  change_management: 0,
-  product_thinking: 0,
+  cloud: 0,
+  ai_tools: 0,
+  modeling: 0,
+  governance: 0,
+  dq: 0,
+  metadata: 0,
+  bi_delivery: 0,
+  compliance: 0,
+  domain: 0,
+  stakeholders: 0,
+  framing: 0,
+  storytelling: 0,
+  strategic: 0,
 }
 
 const INITIAL_STATE: SurveyState = {
