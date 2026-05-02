@@ -14,7 +14,9 @@
       "Bash(npm install *)",
       "mcp__claude_ai_Vercel__list_teams",
       "mcp__claude_ai_Vercel__list_projects",
-      "mcp__claude_ai_Vercel__get_project"
+      "mcp__claude_ai_Vercel__get_project",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }
