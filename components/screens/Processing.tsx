@@ -18,6 +18,7 @@ const STEPS = [
 export default function Processing({ dark = false, onDone }: Props) {
   const [activeStep, setActiveStep] = useState(0)
   const [doneSteps, setDoneSteps] = useState<number[]>([])
+  const [error, setError] = useState<string | null>(null)
   const store = useSurveyStore()
   const setResults = useSurveyStore((s) => s.setResults)
 
@@ -57,11 +58,16 @@ export default function Processing({ dark = false, onDone }: Props) {
           }),
         })
         const data = await res.json()
+        if (!res.ok || data.error || !data.demand_levels) {
+          setError(data.error || 'API call failed. Check your ANTHROPIC_API_KEY in .env.local.')
+          return
+        }
         setDoneSteps([0, 1, 2, 3])
         setResults(data)
         setTimeout(onDone, 400)
       } catch (e) {
         console.error('API error:', e)
+        setError('Network error — is the dev server running?')
       }
     }
 
@@ -73,6 +79,35 @@ export default function Processing({ dark = false, onDone }: Props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  if (error) {
+    return (
+      <div style={{
+        background: bg, color: fg, minHeight: '100vh', fontFamily: "'DM Sans', sans-serif",
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        padding: '0 24px', textAlign: 'center',
+      }}>
+        <div style={{ fontSize: 32, marginBottom: 16 }}>⚠️</div>
+        <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 20, marginBottom: 12 }}>
+          API error
+        </h2>
+        <p style={{ fontSize: 14, lineHeight: 1.6, color: muted, maxWidth: 360, marginBottom: 24 }}>
+          {error}
+        </p>
+        <a
+          href="https://console.anthropic.com/settings/keys"
+          target="_blank"
+          rel="noreferrer"
+          style={{
+            fontSize: 13, fontWeight: 600, color: '#e88c2a',
+            textDecoration: 'underline', letterSpacing: '0.04em',
+          }}
+        >
+          Get an API key →
+        </a>
+      </div>
+    )
+  }
 
   return (
     <div style={{
