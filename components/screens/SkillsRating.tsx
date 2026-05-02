@@ -60,6 +60,139 @@ const CONCERNS = [
 
 const BADGE: Record<number, string> = { 0: 'NOVICE', 1: 'NOVICE', 2: 'LEARNING', 3: 'CAPABLE', 4: 'STRONG', 5: 'EXPERT' }
 
+const LEVEL_EMOJI = ['😶', '🌱', '📚', '💪', '🔥', '🏆']
+
+const SKILL_DESCRIPTIONS: Record<SkillKey, string[]> = {
+  pipelines: [
+    'ETL? Never built one — data just appears, right? 😅',
+    'I know what a pipeline is and have poked at one',
+    'Can build basic ETL flows and debug when things break',
+    'Solid pipeline builder — orchestration, incremental loads, the works',
+    'Designs production-grade pipelines with observability, SLAs and retry logic',
+    'Could architect the data infrastructure for a Fortune 500 from scratch 🏆',
+  ],
+  sql: [
+    'SELECT * FROM confusion WHERE brain = NULL 😶',
+    'Can write basic SELECTs and JOINs on a good day',
+    'Comfortable with aggregations, CTEs, and window functions',
+    'SQL is second nature — optimises queries, writes complex analytics',
+    'Can tune query plans, design schemas, and mentor others on SQL craft',
+    'SQL wizard. Teaches, designs, and writes the book others learn from 🏆',
+  ],
+  python: [
+    "print('hello world') and that's about it 😶",
+    'Can read Python and make small changes without breaking too much',
+    'Write scripts, pandas dataframes, and simple automation',
+    'Builds clean Python modules, knows testing, packaging, and best practices',
+    'Designs Python services, reviews code, and sets team standards',
+    'Could teach a multi-week Python bootcamp without notes 🏆',
+  ],
+  cloud: [
+    'The cloud is just someone else\'s computer — and I\'ve never touched it 😶',
+    'Have clicked around AWS/GCP/Azure but not deployed anything real',
+    'Can deploy basic services, manage storage, and read cloud bills with horror',
+    'Comfortable architecting multi-service cloud data solutions with IAM and cost controls',
+    'Designs cloud-native data platforms — multi-region, secure, cost-optimised',
+    'Certified across multiple clouds and mentors others on cloud architecture 🏆',
+  ],
+  ai_tools: [
+    "ChatGPT is for writing emails, right? 😶",
+    "Used LLMs a few times, haven't built anything with them",
+    'Can call an LLM API and do basic prompt engineering',
+    'Build LLM-powered features — RAG, agents, function calling',
+    'Designs AI systems end-to-end: evals, guardrails, fine-tuning, production ops',
+    'Could give the LLMOps keynote. Builds and evaluates prod AI systems at scale 🏆',
+  ],
+  modeling: [
+    'Flat tables are my comfort zone — dimensional what? 😶',
+    'Understand star schemas conceptually but haven\'t implemented one',
+    'Can design and implement dimensional models and write dbt models',
+    'Designs scalable semantic layers, data vaults, or medallion architectures',
+    'Sets modeling standards for the org; balances performance vs flexibility',
+    'Could author the definitive guide on data modeling for your industry 🏆',
+  ],
+  governance: [
+    'Data governance sounds like a compliance thing for other people 😶',
+    'I know it involves policies and someone owns it, just not me',
+    'Familiar with data stewardship, ownership concepts, and basic cataloging',
+    'Implements governance programs, data dictionaries, and lineage tracking',
+    'Designs governance frameworks — DAMA-aligned, cross-functional, enforced',
+    'Could pass the CDMP exam in my sleep and has probably written training materials 🏆',
+  ],
+  dq: [
+    'Data quality means checking if the file downloaded properly, right? 😶',
+    'I know bad data exists and it causes problems for others',
+    'Can write basic data quality checks and flag anomalies',
+    'Implements DQ frameworks with profiling, SLAs, and alerting pipelines',
+    'Designs org-wide data quality programs with monitoring and escalation paths',
+    'Practically invented the DQ runbook others follow — and monitors the monitors 🏆',
+  ],
+  metadata: [
+    'Metadata is just the info about the info... still not sure why it matters 😶',
+    'Know what a data catalog is; have browsed one once or twice',
+    'Can tag datasets, maintain basic catalog entries, and explain lineage',
+    'Builds and maintains catalog implementations (DataHub, Alation, Collibra)',
+    'Designs metadata strategies, drives adoption, and champions semantic tagging',
+    'Wrote the catalog adoption playbook your company runs on 🏆',
+  ],
+  bi_delivery: [
+    "Dashboards are for managers. I just send CSV files 😶",
+    'Can build a basic bar chart and share it with someone',
+    'Comfortable building self-service dashboards in Tableau, Power BI, or Looker',
+    'Designs the BI layer — semantic models, certified metrics, governed dashboards',
+    'Owns the analytics product end-to-end: from data model to executive adoption',
+    'The BI platform you built is the single source of truth for the whole company 🏆',
+  ],
+  compliance: [
+    'GDPR? Is that a band? 😅',
+    'I know fines exist and they are very, very scary',
+    'Familiar with GDPR basics, CCPA, and what a DPA actually does',
+    'Can navigate GDPR, CCPA, and DPDP — knows when to escalate',
+    'Deep knowledge of global regulations — advises teams and designs compliant systems',
+    'Could advise a regulator. Leads compliance programs and writes the policies 🏆',
+  ],
+  domain: [
+    "I know what the company does… roughly 😶",
+    'Understand the basics of the business but struggle with domain jargon',
+    'Can hold a meeting with business stakeholders without Googling every term',
+    'Deep industry knowledge — speaks the language, spots the real problems',
+    'Bridges data and business strategy; trusted advisor to domain leadership',
+    'You are the go-to person when the business needs someone who truly gets it 🏆',
+  ],
+  stakeholders: [
+    'I send emails with attachments and hope for the best 😶',
+    'Can explain what I do in plain English... sometimes',
+    'Comfortable presenting findings and fielding basic questions',
+    'Skilled at translating data insights for non-technical audiences under pressure',
+    'Navigates complex org dynamics, builds trust, and influences without authority',
+    'Stakeholders request meetings with YOU. You make data decisions happen 🏆',
+  ],
+  framing: [
+    "The business has a problem? That's what the PM is for 😶",
+    'Can restate a problem but struggle to scope or structure the approach',
+    'Can decompose a vague request into answerable questions',
+    'Consistently reframes problems from "what happened" to "what should we do"',
+    'Teaches problem framing to others; shapes org thinking before work begins',
+    'Your problem definition is so crisp the team wishes they had asked you first 🏆',
+  ],
+  storytelling: [
+    'My slide decks are... comprehensive. Very comprehensive. 😶',
+    'Can present data in order; working on making it land emotionally',
+    'Structures a narrative arc — context, conflict, resolution — in presentations',
+    'Builds exec-ready presentations that drive decisions, not just inform',
+    'Coaches others on data storytelling; known for presentations that move rooms',
+    'Your last slide deck got quoted in the board meeting without you in the room 🏆',
+  ],
+  strategic: [
+    'Strategy is above my pay grade and I am fine with that 😶',
+    'I understand the company direction but rarely connect my work to it',
+    'Can articulate how my work contributes to team or department goals',
+    'Proactively shapes team roadmaps and spots data opportunities ahead of asks',
+    'Influences org-level data strategy; trusted in leadership planning conversations',
+    'You wrote the data strategy that is now the company\'s north star 🏆',
+  ],
+}
+
 export default function SkillsRating({ dark = false, onNext, onBack }: Props) {
   const T = mkT(dark)
   const { skills, concerns, setSkill, toggleConcern } = useSurveyStore()
@@ -87,7 +220,7 @@ export default function SkillsRating({ dark = false, onNext, onBack }: Props) {
             Where do<br />you <em style={{ fontStyle: 'italic', fontWeight: 700 }}>shine</em>?
           </h1>
           <p style={{ fontSize: 14, lineHeight: 1.5, color: T.muted, margin: 0 }}>
-            Honest beats aspirational. 0 = never touched it, 5 = could teach a workshop tomorrow.
+            Honest beats aspirational. Tap a level to see what it really means.
           </p>
         </div>
 
@@ -136,15 +269,18 @@ export default function SkillsRating({ dark = false, onNext, onBack }: Props) {
                 <span style={{ fontSize: 11, color: T.muted }}>{g.sub}</span>
               </div>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
               {g.skills.map((s) => {
                 const val = skills[s.key]
                 const badge = BADGE[val]
                 const badgeActive = val >= 4
                 return (
                   <div key={s.key}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                      <span style={{ fontSize: 14, fontWeight: 500, color: T.fg }}>{s.label}</span>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <span style={{ fontSize: 20 }}>{LEVEL_EMOJI[val]}</span>
+                        <span style={{ fontSize: 14, fontWeight: 500, color: T.fg }}>{s.label}</span>
+                      </div>
                       <span style={{
                         fontSize: 9, fontWeight: 600, letterSpacing: '0.14em',
                         padding: '3px 8px', border: `1px solid ${badgeActive ? g.color : T.muted}`,
@@ -155,25 +291,34 @@ export default function SkillsRating({ dark = false, onNext, onBack }: Props) {
                         {badge}
                       </span>
                     </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 4 }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 4, marginBottom: 6 }}>
                       {[0, 1, 2, 3, 4, 5].map((n) => (
                         <button
                           key={n}
                           onClick={() => setSkill(s.key, n)}
                           aria-label={`Set ${s.label} to ${n}`}
                           style={{
-                            height: 36, border: `1.5px solid ${n <= val ? g.color : T.rule}`,
+                            height: 40, border: `1.5px solid ${n <= val ? g.color : T.rule}`,
                             borderRadius: 6, cursor: 'pointer',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 1,
                             background: n <= val ? g.color : 'transparent',
                           }}
                         >
-                          <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 13, color: n <= val ? '#fdf8f0' : T.muted }}>
+                          <span style={{ fontSize: 14, lineHeight: 1 }}>{LEVEL_EMOJI[n]}</span>
+                          <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 10, color: n <= val ? '#fdf8f0' : T.muted }}>
                             {n}
                           </span>
                         </button>
                       ))}
                     </div>
+                    {/* Contextual description */}
+                    <p style={{
+                      fontSize: 11, fontStyle: 'italic', lineHeight: 1.4,
+                      color: g.color, margin: 0, minHeight: 16,
+                      transition: 'opacity 0.2s',
+                    }}>
+                      {SKILL_DESCRIPTIONS[s.key][val]}
+                    </p>
                   </div>
                 )
               })}

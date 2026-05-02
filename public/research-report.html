@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2027 Data Skills Research Report</title>
+  <title>2027 Data &amp; Analytics Skills Research Report</title>
   <style>
     :root {
       --bg: #fdf8f0;
@@ -11,10 +11,14 @@
       --muted: #6b5e52;
       --rule: #e8dcc8;
       --amber: #e88c2a;
-      --green: #1d7a6b;
+      --teal: #1d7a6b;
       --purple: #5c4db1;
-      --red: #c0392b;
+      --coral: #d95f3b;
+      --green: #2c6e49;
       --yellow-bg: #fdf0d5;
+      --teal-bg: #e4f5f2;
+      --purple-bg: #eeeafb;
+      --coral-bg: #fdeee9;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,696 +34,519 @@
 
     .page { max-width: 760px; margin: 0 auto; }
 
-    /* Header */
     .report-header {
       border-bottom: 2px solid var(--fg);
       padding-bottom: 20px;
       margin-bottom: 32px;
     }
     .report-header .eyebrow {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 8px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
+      color: var(--muted); text-transform: uppercase; margin-bottom: 8px;
     }
     .report-header h1 {
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin-bottom: 10px;
+      font-size: 28px; font-weight: 800; letter-spacing: -0.03em;
+      line-height: 1.1; margin-bottom: 10px;
     }
-    .report-header .subtitle {
-      font-size: 14px;
-      color: var(--muted);
-      max-width: 560px;
-    }
-    .model-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 16px;
-    }
+    .report-header .subtitle { font-size: 14px; color: var(--muted); max-width: 560px; }
+    .model-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
     .badge {
-      font-size: 11px;
-      font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--rule);
-      color: var(--muted);
+      font-size: 11px; font-weight: 600; padding: 4px 10px;
+      border-radius: 999px; border: 1px solid var(--rule); color: var(--muted);
     }
 
-    /* Section */
     .section { margin-bottom: 48px; }
     .section-title {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 6px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
     }
-    .section h2 {
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 8px;
-    }
-    .section .lead {
-      font-size: 14px;
-      color: var(--muted);
-      margin-bottom: 20px;
-      max-width: 600px;
-    }
+    .section h2 { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .section .lead { font-size: 14px; color: var(--muted); margin-bottom: 20px; max-width: 600px; }
 
-    /* Callout box */
     .callout {
-      background: var(--yellow-bg);
-      border-left: 3px solid var(--amber);
-      padding: 12px 16px;
-      border-radius: 0 8px 8px 0;
-      font-size: 14px;
-      margin-bottom: 20px;
+      background: var(--yellow-bg); border-left: 3px solid var(--amber);
+      padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 14px; margin-bottom: 20px;
     }
     .callout strong { color: var(--amber); }
+    .callout-teal  { background: var(--teal-bg);   border-left-color: var(--teal);   }
+    .callout-teal  strong { color: var(--teal); }
+    .callout-purple { background: var(--purple-bg); border-left-color: var(--purple); }
+    .callout-purple strong { color: var(--purple); }
+    .callout-coral  { background: var(--coral-bg);  border-left-color: var(--coral);  }
+    .callout-coral  strong { color: var(--coral); }
 
-    /* Tables */
     .table-wrap { overflow-x: auto; margin-bottom: 24px; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
     thead tr { border-bottom: 2px solid var(--fg); }
     thead th {
-      text-align: left;
-      padding: 8px 10px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      white-space: nowrap;
+      text-align: left; padding: 8px 10px; font-size: 11px;
+      font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); white-space: nowrap;
     }
     tbody tr { border-bottom: 1px solid var(--rule); }
     tbody tr:last-child { border-bottom: none; }
-    tbody td {
-      padding: 8px 10px;
-      vertical-align: middle;
-    }
+    tbody td { padding: 8px 10px; vertical-align: middle; }
     .skill-name { font-weight: 500; }
     .num { text-align: center; font-variant-numeric: tabular-nums; }
-    .avg { font-weight: 700; color: var(--amber); text-align: center; }
+    .score-bar { display: flex; align-items: center; gap: 8px; }
+    .bar-track { flex: 1; height: 6px; background: var(--rule); border-radius: 999px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 999px; }
+    .bar-val { font-size: 12px; font-weight: 700; width: 28px; text-align: right; color: var(--fg); }
 
-    /* Score bar */
-    .score-bar {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .bar-track {
-      flex: 1;
-      height: 6px;
-      background: var(--rule);
-      border-radius: 999px;
-      overflow: hidden;
-    }
-    .bar-fill {
-      height: 100%;
-      border-radius: 999px;
-      background: var(--amber);
-    }
-    .bar-val {
-      font-size: 12px;
-      font-weight: 700;
-      width: 28px;
-      text-align: right;
-      color: var(--fg);
-    }
-
-    /* Pill tags */
     .pill {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 999px;
-      letter-spacing: 0.05em;
+      display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px;
+      border-radius: 999px; letter-spacing: 0.05em;
     }
-    .pill-green { background: #d4edda; color: #1d7a6b; }
-    .pill-amber { background: #fdf0d5; color: #b06a10; }
+    .pill-de  { background: #d4edda; color: #1d7a6b; }
+    .pill-an  { background: #fdf0d5; color: #b06a10; }
+    .pill-ds  { background: #ede8f8; color: #5c4db1; }
+    .pill-gv  { background: #d8eddf; color: #2c6e49; }
     .pill-red { background: #fde8e8; color: #c0392b; }
-    .pill-purple { background: #ede8f8; color: #5c4db1; }
-    .pill-gray { background: var(--rule); color: var(--muted); }
 
-    /* Delta cell */
-    .delta-pos { color: var(--green); font-weight: 700; }
-    .delta-neg { color: var(--red); font-weight: 700; }
-    .delta-strong { color: var(--amber); font-weight: 700; }
+    .group-strip {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 0; margin-bottom: 4px; border-bottom: 1px solid var(--rule);
+    }
+    .group-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .group-label { font-size: 12px; font-weight: 700; }
+    .group-desc  { font-size: 12px; color: var(--muted); }
 
-    /* Confidence dots */
-    .conf { font-size: 13px; letter-spacing: -2px; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+    @media (max-width: 540px) { .two-col { grid-template-columns: 1fr; } }
 
-    /* Role card grid */
-    .role-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .role-card {
-      border: 1px solid var(--rule);
-      border-radius: 10px;
-      padding: 14px 16px;
-    }
-    .role-card .role-name {
-      font-weight: 700;
-      font-size: 14px;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .dest-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      padding: 5px 0;
-      border-top: 1px solid var(--rule);
-      font-size: 13px;
-    }
-    .dest-type { width: 20px; flex-shrink: 0; text-align: center; }
-    .dest-name { flex: 1; font-weight: 500; }
-    .dest-skills { font-size: 11px; color: var(--muted); }
+    .card { border: 1px solid var(--rule); border-radius: 10px; padding: 16px; }
+    .card h3 { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+    .card ul { padding-left: 18px; }
+    .card li { font-size: 13px; margin-bottom: 6px; color: var(--muted); }
+    .card li strong { color: var(--fg); }
 
-    /* Emerging skills */
+    .level-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+    .level-table td { padding: 6px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+    .level-table td:first-child {
+      font-weight: 700; width: 32px; text-align: center;
+      color: var(--amber); font-size: 16px;
+    }
+    .level-table tr:last-child td { border-bottom: none; }
+
+    .quote {
+      background: var(--yellow-bg); border-radius: 8px;
+      padding: 16px 20px; margin-bottom: 16px; font-style: italic; font-size: 14px;
+    }
+    .quote cite {
+      display: block; margin-top: 8px; font-style: normal;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: var(--muted);
+    }
+
     .skill-row {
-      display: flex;
-      gap: 12px;
-      padding: 14px 0;
-      border-top: 1px solid var(--rule);
-      align-items: flex-start;
+      display: flex; gap: 12px; padding: 14px 0;
+      border-top: 1px solid var(--rule); align-items: flex-start;
     }
     .skill-row:last-child { border-bottom: 1px solid var(--rule); }
     .skill-signal {
-      width: 40px;
-      flex-shrink: 0;
-      text-align: center;
-      padding-top: 2px;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--amber);
+      width: 40px; flex-shrink: 0; text-align: center;
+      padding-top: 2px; font-size: 12px; font-weight: 700; color: var(--amber);
     }
     .skill-body { flex: 1; }
     .skill-body strong { font-size: 14px; }
     .skill-body p { font-size: 13px; color: var(--muted); margin-top: 2px; }
     .skill-body .roles { margin-top: 6px; display: flex; gap: 6px; flex-wrap: wrap; }
 
-    /* Group header strip */
-    .group-strip {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 0;
-      margin-bottom: 4px;
-      border-bottom: 1px solid var(--rule);
-    }
-    .group-dot {
-      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
-    }
-    .group-label { font-size: 12px; font-weight: 700; }
-    .group-desc { font-size: 12px; color: var(--muted); }
+    .disruption-high { color: var(--coral); font-weight: 600; }
+    .disruption-med  { color: var(--amber); font-weight: 600; }
+    .disruption-low  { color: var(--teal);  font-weight: 600; }
 
-    /* Footer */
     footer {
-      margin-top: 64px;
-      padding-top: 20px;
-      border-top: 1px solid var(--rule);
-      font-size: 12px;
-      color: var(--muted);
+      margin-top: 64px; padding-top: 20px;
+      border-top: 1px solid var(--rule); font-size: 12px; color: var(--muted);
     }
 
     @media (max-width: 500px) {
-      .role-grid { grid-template-columns: 1fr; }
-      thead th:nth-child(2),
-      thead th:nth-child(3),
-      thead th:nth-child(4),
-      thead th:nth-child(5),
-      tbody td:nth-child(2),
-      tbody td:nth-child(3),
-      tbody td:nth-child(4),
-      tbody td:nth-child(5) { display: none; }
+      .hide-mobile { display: none; }
     }
   </style>
 </head>
 <body>
 <div class="page">
 
-  <!-- ─── HEADER ─── -->
+  <!-- HEADER -->
   <div class="report-header">
-    <div class="eyebrow">Skill Navigator · Research Report</div>
-    <h1>What Data Skills Will Matter<br>Most in 2027?</h1>
+    <div class="eyebrow">Skill Navigator · Research Report · May 2026</div>
+    <h1>What Data &amp; Analytics Skills Will Matter Most in 2027?</h1>
     <p class="subtitle">
-      We asked four leading AI models the same question: which skills will employers
-      demand from data professionals in 2027? This report shows where they agreed,
-      where they disagreed, and what the consensus tells us.
+      Four frontier AI models scored 16 skills across four data role archetypes.
+      Scores represent 2027 demand for <em>human expertise</em> — post-AI-discount.
     </p>
     <div class="model-badges">
-      <span class="badge">Claude Opus 4.7</span>
-      <span class="badge">GPT-5.3</span>
-      <span class="badge">Gemini 3.1 Pro</span>
-      <span class="badge">Grok 2026.1</span>
+      <span class="badge">Grok 4 · xAI</span>
+      <span class="badge">GPT-5.3 · OpenAI</span>
+      <span class="badge">Gemini 3.1 Pro · Google</span>
+      <span class="badge">Claude Opus 4.7 · Anthropic</span>
       <span class="badge">Generated 2 May 2026</span>
     </div>
   </div>
 
-  <!-- ─── HOW TO READ ─── -->
+  <!-- HOW TO READ -->
   <div class="section">
     <div class="section-title">How to read this report</div>
+    <h2>Scoring key &amp; methodology</h2>
     <p class="lead">
-      Skills are scored 0–5 (0 = employers don't care, 5 = must-have). Each score shown
-      is the average across all four AI models. Where models disagreed by 2 or more
-      points, we flag it. Industry deltas show how much a skill goes up (+) or down (−)
-      depending on the sector you work in.
+      Each model rated 2027 skill demand on a 1–5 scale. Scores were averaged across
+      all four models and rounded to the nearest integer.
+      We asked every model to score <em>human-added value</em> in 2027 — not historical prestige.
+      Skills where AI already handles the repetitive core are scored lower accordingly.
     </p>
     <div class="callout">
-      <strong>Confidence key:</strong> ✦✦✦✦ = all 4 models agree &nbsp;·&nbsp;
-      ✦✦✦ = 3 out of 4 agree &nbsp;·&nbsp; ✦✦ = 2 out of 4 agree
-    </div>
-  </div>
-
-  <!-- ─── SECTION 1: BASELINE DEMAND ─── -->
-  <div class="section">
-    <div class="section-title">Section 1 of 4</div>
-    <h2>Skill Demand by Role Family</h2>
-    <p class="lead">
-      The 16 skills are split into three groups: Technical (what you build),
-      Domain (what you understand about the business), and Soft &amp; Cross-functional
-      (how you work with people). Scores show 2027 demand — not today's.
-    </p>
-
-    <!-- DE -->
-    <div class="group-strip" style="margin-top:20px;">
-      <div class="group-dot" style="background:#1d7a6b;"></div>
-      <span class="group-label">Data Engineers (DE)</span>
-      <span class="group-desc">People who build and maintain data pipelines and infrastructure</span>
+      <strong>Confidence key:</strong> ✦✦✦ = all 4 models agree within ±0.5 &nbsp;·&nbsp;
+      ✦✦ = 3 of 4 within ±1 &nbsp;·&nbsp; ✦ = majority aligned, some spread
     </div>
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th style="width:160px;">Skill</th>
-            <th class="num">Opus</th>
-            <th class="num">GPT</th>
-            <th class="num">Gemini</th>
-            <th class="num">Grok</th>
-            <th style="width:180px;">Avg Score</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Score</th><th>What it means</th><th>Example</th></tr></thead>
         <tbody>
-          <tr><td class="skill-name">Data pipelines / ETL</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:100%;"></div></div><span class="bar-val">5.0</span></div></td></tr>
-          <tr><td class="skill-name">Python / scripting</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:100%;"></div></div><span class="bar-val">5.0</span></div></td></tr>
-          <tr><td class="skill-name">Cloud platforms</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:100%;"></div></div><span class="bar-val">5.0</span></div></td></tr>
-          <tr><td class="skill-name">SQL &amp; query fluency</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:96%;"></div></div><span class="bar-val">4.8</span></div></td></tr>
-          <tr><td class="skill-name">Data modeling</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:86%;"></div></div><span class="bar-val">4.3</span></div></td></tr>
-          <tr><td class="skill-name">AI / LLM tools</td><td class="num">4</td><td class="num">4</td><td class="num">3</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:76%;"></div></div><span class="bar-val">3.8</span></div></td></tr>
-          <tr><td class="skill-name">Data quality frameworks</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:80%;"></div></div><span class="bar-val">4.0</span></div></td></tr>
-          <tr><td class="skill-name">Metadata &amp; cataloging</td><td class="num">4</td><td class="num">4</td><td class="num">3</td><td class="num">3</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:70%;"></div></div><span class="bar-val">3.5</span></div></td></tr>
-          <tr><td class="skill-name">Governance &amp; policy</td><td class="num">3</td><td class="num">3</td><td class="num">3</td><td class="num">3</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:60%;"></div></div><span class="bar-val">3.0</span></div></td></tr>
-          <tr><td class="skill-name">Stakeholder communication</td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">3</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:66%;"></div></div><span class="bar-val">3.3</span></div></td></tr>
-          <tr><td class="skill-name">Business domain knowledge</td><td class="num">3</td><td class="num">4</td><td class="num">2</td><td class="num">3</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:60%;"></div></div><span class="bar-val">3.0</span></div></td></tr>
-          <tr><td class="skill-name">Strategic thinking</td><td class="num">2</td><td class="num">4</td><td class="num">2</td><td class="num">3</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:56%;background:#e88c2a;opacity:0.6;"></div></div><span class="bar-val" style="color:var(--muted);">2.8 ⚠</span></div></td></tr>
-          <tr><td class="skill-name">Regulatory fluency</td><td class="num">3</td><td class="num">2</td><td class="num">2</td><td class="num">3</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:50%;"></div></div><span class="bar-val">2.5</span></div></td></tr>
-          <tr><td class="skill-name">Business problem framing</td><td class="num">3</td><td class="num">3</td><td class="num">2</td><td class="num">2</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:50%;"></div></div><span class="bar-val">2.5</span></div></td></tr>
-          <tr><td class="skill-name">Analytics &amp; BI delivery</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:40%;"></div></div><span class="bar-val">2.0</span></div></td></tr>
-          <tr><td class="skill-name">Executive storytelling</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">2</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:36%;"></div></div><span class="bar-val">1.8</span></div></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p style="font-size:12px;color:var(--muted);margin-bottom:24px;">⚠ Strategic thinking: GPT-5.3 scored this 4 (sees DEs taking on data strategy ownership); the other three scored 2–3. We use the average.</p>
-
-    <!-- AN -->
-    <div class="group-strip">
-      <div class="group-dot" style="background:#e88c2a;"></div>
-      <span class="group-label">Analytics &amp; BI (AN)</span>
-      <span class="group-desc">People who turn data into insight for business teams</span>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th style="width:160px;">Skill</th>
-            <th class="num">Opus</th>
-            <th class="num">GPT</th>
-            <th class="num">Gemini</th>
-            <th class="num">Grok</th>
-            <th style="width:180px;">Avg Score</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td class="skill-name">SQL &amp; query fluency</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:100%;background:#e88c2a;"></div></div><span class="bar-val">5.0</span></div></td></tr>
-          <tr><td class="skill-name">Analytics &amp; BI delivery</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:100%;background:#e88c2a;"></div></div><span class="bar-val">5.0</span></div></td></tr>
-          <tr><td class="skill-name">Executive storytelling</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:96%;background:#e88c2a;"></div></div><span class="bar-val">4.8</span></div></td></tr>
-          <tr><td class="skill-name">Stakeholder communication</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:96%;background:#e88c2a;"></div></div><span class="bar-val">4.8</span></div></td></tr>
-          <tr><td class="skill-name">Business domain knowledge</td><td class="num">4</td><td class="num">5</td><td class="num">5</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#e88c2a;"></div></div><span class="bar-val">4.5</span></div></td></tr>
-          <tr><td class="skill-name">Business problem framing</td><td class="num">5</td><td class="num">5</td><td class="num">4</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#e88c2a;"></div></div><span class="bar-val">4.5</span></div></td></tr>
-          <tr><td class="skill-name">AI / LLM tools</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#e88c2a;"></div></div><span class="bar-val">4.0</span></div></td></tr>
-          <tr><td class="skill-name">Python / scripting</td><td class="num">4</td><td class="num">4</td><td class="num">3</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:76%;background:#e88c2a;"></div></div><span class="bar-val">3.8</span></div></td></tr>
-          <tr><td class="skill-name">Strategic thinking</td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">3</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:66%;background:#e88c2a;"></div></div><span class="bar-val">3.3</span></div></td></tr>
-          <tr><td class="skill-name">Data quality frameworks</td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">3</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:66%;background:#e88c2a;"></div></div><span class="bar-val">3.3</span></div></td></tr>
-          <tr><td class="skill-name">Data modeling</td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">3</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:66%;background:#e88c2a;"></div></div><span class="bar-val">3.3</span></div></td></tr>
-          <tr><td class="skill-name">Cloud platforms</td><td class="num">3</td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:66%;background:#e88c2a;"></div></div><span class="bar-val">3.3</span></div></td></tr>
-          <tr><td class="skill-name">Data pipelines / ETL</td><td class="num">3</td><td class="num">3</td><td class="num">2</td><td class="num">3</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:56%;background:#e88c2a;"></div></div><span class="bar-val">2.8</span></div></td></tr>
-          <tr><td class="skill-name">Metadata &amp; cataloging</td><td class="num">3</td><td class="num">3</td><td class="num">2</td><td class="num">2</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:50%;background:#e88c2a;"></div></div><span class="bar-val">2.5</span></div></td></tr>
-          <tr><td class="skill-name">Regulatory fluency</td><td class="num">2</td><td class="num">3</td><td class="num">2</td><td class="num">2</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:46%;background:#e88c2a;"></div></div><span class="bar-val">2.3</span></div></td></tr>
-          <tr><td class="skill-name">Governance &amp; policy</td><td class="num">2</td><td class="num">3</td><td class="num">2</td><td class="num">2</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:46%;background:#e88c2a;"></div></div><span class="bar-val">2.3</span></div></td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- DS -->
-    <div class="group-strip">
-      <div class="group-dot" style="background:#5c4db1;"></div>
-      <span class="group-label">Data Scientists (DS)</span>
-      <span class="group-desc">People who build models, run experiments, and work with AI</span>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th style="width:160px;">Skill</th>
-            <th class="num">Opus</th>
-            <th class="num">GPT</th>
-            <th class="num">Gemini</th>
-            <th class="num">Grok</th>
-            <th style="width:180px;">Avg Score</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td class="skill-name">Python / scripting</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:100%;background:#5c4db1;"></div></div><span class="bar-val">5.0</span></div></td></tr>
-          <tr><td class="skill-name">AI / LLM tools</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:100%;background:#5c4db1;"></div></div><span class="bar-val">5.0</span></div></td></tr>
-          <tr><td class="skill-name">Business problem framing</td><td class="num">5</td><td class="num">4</td><td class="num">4</td><td class="num">5</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#5c4db1;"></div></div><span class="bar-val">4.5</span></div></td></tr>
-          <tr><td class="skill-name">Cloud platforms</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#5c4db1;"></div></div><span class="bar-val">4.0</span></div></td></tr>
-          <tr><td class="skill-name">SQL &amp; query fluency</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#5c4db1;"></div></div><span class="bar-val">4.0</span></div></td></tr>
-          <tr><td class="skill-name">Business domain knowledge</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#5c4db1;"></div></div><span class="bar-val">4.0</span></div></td></tr>
-          <tr><td class="skill-name">Stakeholder communication</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#5c4db1;"></div></div><span class="bar-val">4.0</span></div></td></tr>
-          <tr><td class="skill-name">Executive storytelling</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#5c4db1;"></div></div><span class="bar-val">4.0</span></div></td></tr>
-          <tr><td class="skill-name">Data modeling</td><td class="num">4</td><td class="num">4</td><td class="num">3</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:76%;background:#5c4db1;"></div></div><span class="bar-val">3.8</span></div></td></tr>
-          <tr><td class="skill-name">Strategic thinking</td><td class="num">4</td><td class="num">4</td><td class="num">3</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:76%;background:#5c4db1;"></div></div><span class="bar-val">3.8</span></div></td></tr>
-          <tr><td class="skill-name">Data pipelines / ETL</td><td class="num">3</td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:66%;background:#5c4db1;"></div></div><span class="bar-val">3.3</span></div></td></tr>
-          <tr><td class="skill-name">Data quality frameworks</td><td class="num">3</td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:66%;background:#5c4db1;"></div></div><span class="bar-val">3.3</span></div></td></tr>
-          <tr><td class="skill-name">Governance &amp; policy</td><td class="num">2</td><td class="num">3</td><td class="num">2</td><td class="num">3</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:50%;background:#5c4db1;"></div></div><span class="bar-val">2.5</span></div></td></tr>
-          <tr><td class="skill-name">Metadata &amp; cataloging</td><td class="num">2</td><td class="num">3</td><td class="num">2</td><td class="num">3</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:50%;background:#5c4db1;"></div></div><span class="bar-val">2.5</span></div></td></tr>
-          <tr><td class="skill-name">Analytics &amp; BI delivery</td><td class="num">3</td><td class="num">2</td><td class="num">2</td><td class="num">3</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:50%;background:#5c4db1;"></div></div><span class="bar-val">2.5</span></div></td></tr>
-          <tr><td class="skill-name">Regulatory fluency</td><td class="num">3</td><td class="num">2</td><td class="num">2</td><td class="num">3</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:50%;background:#5c4db1;"></div></div><span class="bar-val">2.5</span></div></td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- GV -->
-    <div class="group-strip">
-      <div class="group-dot" style="background:#2c6e49;"></div>
-      <span class="group-label">Data Governance &amp; Management (GV)</span>
-      <span class="group-desc">People who set data standards, policies, and quality controls</span>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th style="width:160px;">Skill</th>
-            <th class="num">Opus</th>
-            <th class="num">GPT</th>
-            <th class="num">Gemini</th>
-            <th class="num">Grok</th>
-            <th style="width:180px;">Avg Score</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td class="skill-name">Governance &amp; policy</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:100%;background:#2c6e49;"></div></div><span class="bar-val">5.0</span></div></td></tr>
-          <tr><td class="skill-name">Data quality frameworks</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:100%;background:#2c6e49;"></div></div><span class="bar-val">5.0</span></div></td></tr>
-          <tr><td class="skill-name">Metadata &amp; cataloging</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:100%;background:#2c6e49;"></div></div><span class="bar-val">5.0</span></div></td></tr>
-          <tr><td class="skill-name">Regulatory fluency</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:100%;background:#2c6e49;"></div></div><span class="bar-val">5.0</span></div></td></tr>
-          <tr><td class="skill-name">Stakeholder communication</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:100%;background:#2c6e49;"></div></div><span class="bar-val">5.0</span></div></td></tr>
-          <tr><td class="skill-name">Strategic thinking</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:100%;background:#2c6e49;"></div></div><span class="bar-val">5.0</span></div></td></tr>
-          <tr><td class="skill-name">Business domain knowledge</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:86%;background:#2c6e49;"></div></div><span class="bar-val">4.3</span></div></td></tr>
-          <tr><td class="skill-name">Business problem framing</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:86%;background:#2c6e49;"></div></div><span class="bar-val">4.3</span></div></td></tr>
-          <tr><td class="skill-name">Executive storytelling</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:86%;background:#2c6e49;"></div></div><span class="bar-val">4.3</span></div></td></tr>
-          <tr><td class="skill-name">Data modeling</td><td class="num">4</td><td class="num">4</td><td class="num">3</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:76%;background:#2c6e49;"></div></div><span class="bar-val">3.8</span></div></td></tr>
-          <tr><td class="skill-name">AI / LLM tools</td><td class="num">3</td><td class="num">4</td><td class="num">2</td><td class="num">4</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:66%;background:#2c6e49;opacity:0.7;"></div></div><span class="bar-val" style="color:var(--muted);">3.3 ⚠</span></div></td></tr>
-          <tr><td class="skill-name">Cloud platforms</td><td class="num">3</td><td class="num">4</td><td class="num">2</td><td class="num">3</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:60%;background:#2c6e49;opacity:0.7;"></div></div><span class="bar-val" style="color:var(--muted);">3.0 ⚠</span></div></td></tr>
-          <tr><td class="skill-name">SQL &amp; query fluency</td><td class="num">3</td><td class="num">3</td><td class="num">2</td><td class="num">3</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:56%;background:#2c6e49;"></div></div><span class="bar-val">2.8</span></div></td></tr>
-          <tr><td class="skill-name">Python / scripting</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">3</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:40%;background:#2c6e49;opacity:0.7;"></div></div><span class="bar-val" style="color:var(--muted);">2.0 ⚠</span></div></td></tr>
-          <tr><td class="skill-name">Analytics &amp; BI delivery</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">3</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:40%;background:#2c6e49;opacity:0.7;"></div></div><span class="bar-val" style="color:var(--muted);">2.0 ⚠</span></div></td></tr>
-          <tr><td class="skill-name">Data pipelines / ETL</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">2</td><td><div class="score-bar"><div class="bar-track"><div class="bar-fill" style="width:36%;background:#2c6e49;"></div></div><span class="bar-val">1.8</span></div></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p style="font-size:12px;color:var(--muted);">⚠ GV had the most disagreement on technical skills (cloud, AI tools, Python). Gemini sees GV as non-technical; GPT/Grok see growing AI literacy requirements. Six core governance skills were unanimous 5/5 across all models.</p>
-  </div>
-
-  <!-- ─── SECTION 2: INDUSTRY DELTAS ─── -->
-  <div class="section">
-    <div class="section-title">Section 2 of 4</div>
-    <h2>How Your Industry Changes the Picture</h2>
-    <p class="lead">
-      Some skills matter more (or less) depending on the sector you work in.
-      These are the adjustments to apply on top of the baseline scores above.
-      Only signals where at least 3 of 4 models agreed are shown.
-    </p>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Industry</th>
-            <th>Role</th>
-            <th>Skill boost</th>
-            <th>Change</th>
-            <th>Confidence</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td rowspan="7" style="font-weight:600;vertical-align:top;padding-top:10px;">Financial Services</td><td><span class="pill pill-green">DE</span></td><td>Regulatory fluency</td><td class="delta-pos">+1</td><td class="conf">✦✦✦✦</td></tr>
-          <tr><td><span class="pill pill-green">DE</span></td><td>Governance &amp; policy</td><td class="delta-pos">+1</td><td class="conf">✦✦✦</td></tr>
-          <tr><td><span class="pill pill-amber">AN</span></td><td>Regulatory fluency</td><td class="delta-pos">+1</td><td class="conf">✦✦✦✦</td></tr>
-          <tr><td><span class="pill pill-amber">AN</span></td><td>Business domain knowledge</td><td class="delta-pos">+1</td><td class="conf">✦✦✦</td></tr>
-          <tr><td><span class="pill pill-purple">DS</span></td><td>Regulatory fluency</td><td class="delta-pos">+1</td><td class="conf">✦✦✦✦</td></tr>
-          <tr><td><span class="pill pill-gray">GV</span></td><td>Regulatory fluency</td><td class="delta-pos">+1</td><td class="conf">✦✦✦</td></tr>
-          <tr style="border-bottom:2px solid var(--rule);"><td><span class="pill pill-gray">GV</span></td><td>Business domain knowledge</td><td class="delta-pos">+1</td><td class="conf">✦✦✦</td></tr>
-
-          <tr><td rowspan="5" style="font-weight:600;vertical-align:top;padding-top:10px;">Insurance</td><td><span class="pill pill-amber">AN</span></td><td>Business domain knowledge</td><td class="delta-pos">+1</td><td class="conf">✦✦✦✦</td></tr>
-          <tr><td><span class="pill pill-amber">AN</span></td><td>Regulatory fluency</td><td class="delta-pos">+1</td><td class="conf">✦✦✦</td></tr>
-          <tr><td><span class="pill pill-purple">DS</span></td><td>Regulatory fluency</td><td class="delta-pos">+1</td><td class="conf">✦✦✦</td></tr>
-          <tr><td><span class="pill pill-purple">DS</span></td><td>Business domain knowledge</td><td class="delta-pos">+1</td><td class="conf">✦✦✦</td></tr>
-          <tr style="border-bottom:2px solid var(--rule);"><td><span class="pill pill-gray">GV</span></td><td>Regulatory fluency</td><td class="delta-pos">+1</td><td class="conf">✦✦✦</td></tr>
-
-          <tr><td rowspan="6" style="font-weight:600;vertical-align:top;padding-top:10px;">Healthcare</td><td><span class="pill pill-green">DE</span></td><td>Regulatory fluency</td><td class="delta-strong">+1 to +2</td><td class="conf">✦✦✦✦</td></tr>
-          <tr><td><span class="pill pill-green">DE</span></td><td>Governance &amp; policy</td><td class="delta-pos">+1</td><td class="conf">✦✦✦</td></tr>
-          <tr><td><span class="pill pill-amber">AN</span></td><td>Regulatory fluency</td><td class="delta-strong">+1 to +2</td><td class="conf">✦✦✦✦</td></tr>
-          <tr><td><span class="pill pill-amber">AN</span></td><td>Business domain knowledge</td><td class="delta-pos">+1</td><td class="conf">✦✦✦</td></tr>
-          <tr><td><span class="pill pill-purple">DS</span></td><td>Regulatory fluency</td><td class="delta-strong">+1 to +2</td><td class="conf">✦✦✦✦</td></tr>
-          <tr style="border-bottom:2px solid var(--rule);"><td><span class="pill pill-purple">DS</span></td><td>Business domain knowledge</td><td class="delta-pos">+1</td><td class="conf">✦✦✦</td></tr>
-
-          <tr><td rowspan="4" style="font-weight:600;vertical-align:top;padding-top:10px;">Tech / SaaS</td><td><span class="pill pill-green">DE</span></td><td>AI / LLM tools</td><td class="delta-pos">+1</td><td class="conf">✦✦✦✦</td></tr>
-          <tr><td><span class="pill pill-amber">AN</span></td><td>AI / LLM tools</td><td class="delta-pos">+1</td><td class="conf">✦✦✦✦</td></tr>
-          <tr><td><span class="pill pill-purple">DS</span></td><td>AI / LLM tools</td><td class="delta-pos">+1</td><td class="conf">✦✦✦✦</td></tr>
-          <tr style="border-bottom:2px solid var(--rule);"><td><span class="pill pill-gray">GV</span></td><td>AI / LLM tools</td><td class="delta-pos">+1</td><td class="conf">✦✦✦</td></tr>
-
-          <tr><td rowspan="4" style="font-weight:600;vertical-align:top;padding-top:10px;">Retail / E-com</td><td><span class="pill pill-green">DE</span></td><td>Data pipelines / ETL</td><td class="delta-pos">+1</td><td class="conf">✦✦✦</td></tr>
-          <tr><td><span class="pill pill-amber">AN</span></td><td>Business domain knowledge</td><td class="delta-pos">+1</td><td class="conf">✦✦✦</td></tr>
-          <tr><td><span class="pill pill-amber">AN</span></td><td>Analytics &amp; BI delivery</td><td class="delta-pos">+1</td><td class="conf">✦✦✦</td></tr>
-          <tr style="border-bottom:2px solid var(--rule);"><td><span class="pill pill-purple">DS</span></td><td>Business domain knowledge</td><td class="delta-pos">+1</td><td class="conf">✦✦✦</td></tr>
-
-          <tr><td rowspan="5" style="font-weight:600;vertical-align:top;padding-top:10px;">Consulting</td><td><span class="pill pill-green">DE</span></td><td>Stakeholder communication</td><td class="delta-pos">+1</td><td class="conf">✦✦✦✦</td></tr>
-          <tr><td><span class="pill pill-amber">AN</span></td><td>Executive storytelling</td><td class="delta-pos">+1</td><td class="conf">✦✦✦</td></tr>
-          <tr><td><span class="pill pill-amber">AN</span></td><td>Stakeholder communication</td><td class="delta-pos">+1</td><td class="conf">✦✦✦</td></tr>
-          <tr><td><span class="pill pill-amber">AN</span></td><td>Strategic thinking</td><td class="delta-pos">+1</td><td class="conf">✦✦✦</td></tr>
-          <tr><td><span class="pill pill-gray">GV</span></td><td>Strategic thinking</td><td class="delta-pos">+1</td><td class="conf">✦✦✦✦</td></tr>
+          <tr><td class="num" style="font-weight:700;color:var(--amber);">5</td><td>Must-have · table stakes by 2027</td><td>AI/LLM tools for every archetype</td></tr>
+          <tr><td class="num" style="font-weight:700;">4</td><td>High demand · strong differentiator</td><td>Cloud platforms for Data Engineers</td></tr>
+          <tr><td class="num" style="font-weight:700;">3</td><td>Solid baseline · expected at mid-level</td><td>SQL for Data Scientists</td></tr>
+          <tr><td class="num" style="font-weight:700;color:var(--muted);">2</td><td>Nice to have · AI can partially substitute</td><td>BI delivery for Data Engineers</td></tr>
+          <tr><td class="num" style="font-weight:700;color:var(--muted);">1</td><td>AI-discounted · automation takes the core</td><td>Basic report building</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 
-  <!-- ─── SECTION 3: ROLE DESTINATIONS ─── -->
+  <!-- SECTION 1: AI DISCOUNT -->
   <div class="section">
-    <div class="section-title">Section 3 of 4</div>
-    <h2>Where Each Role Can Go Next</h2>
+    <div class="section-title">Section 01</div>
+    <h2>The AI Discount — Why the Scores Changed</h2>
     <p class="lead">
-      For each of the 20 roles in the survey, we asked the AI models: "where do
-      people in this role typically move next?" Below are the top destinations
-      agreed on by at least 3 of the 4 models. The move type and disruption risk
-      reflect the majority view.
-    </p>
-    <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">
-      Move types: ↑ Natural progression &nbsp;·&nbsp; ↔ Lateral pivot &nbsp;·&nbsp; ↗ Stretch move &nbsp;&nbsp;
-      Risk: <span class="pill pill-green">LOW</span> <span class="pill pill-amber">MEDIUM</span> <span class="pill pill-red">HIGH</span>
+      Earlier surveys scored skills on historical importance. This survey asked models to score
+      <em>what will still require human expertise</em> in 2027. The shifts are significant.
     </p>
 
-    <div class="role-grid">
-
-      <div class="role-card">
-        <div class="role-name">Data Engineer <span class="pill pill-green">LOW risk</span></div>
-        <div class="dest-row"><span class="dest-type">↑</span><div><div class="dest-name">Data Architect</div><div class="dest-skills">modeling · cloud · strategic</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">DataOps Engineer</div><div class="dest-skills">pipelines · cloud · dq</div></div></div>
-        <div class="dest-row"><span class="dest-type">↗</span><div><div class="dest-name">ML Engineer</div><div class="dest-skills">python · ai_tools · pipelines</div></div></div>
-      </div>
-
-      <div class="role-card">
-        <div class="role-name">Analytics Engineer <span class="pill pill-amber">MEDIUM risk</span></div>
-        <div class="dest-row"><span class="dest-type">↑</span><div><div class="dest-name">Data Architect</div><div class="dest-skills">modeling · sql · governance</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">Data Product Manager</div><div class="dest-skills">stakeholders · framing · bi_delivery</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">Data Engineer</div><div class="dest-skills">pipelines · cloud · python</div></div></div>
-      </div>
-
-      <div class="role-card">
-        <div class="role-name">Data Architect <span class="pill pill-green">LOW risk</span></div>
-        <div class="dest-row"><span class="dest-type">↗</span><div><div class="dest-name">Chief Data Officer</div><div class="dest-skills">strategic · governance · stakeholders</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">Data Product Manager</div><div class="dest-skills">modeling · strategic · domain</div></div></div>
-        <div class="dest-row"><span class="dest-type">↑</span><div><div class="dest-name">Data Governance Manager</div><div class="dest-skills">governance · metadata · compliance</div></div></div>
-      </div>
-
-      <div class="role-card">
-        <div class="role-name">DataOps Engineer <span class="pill pill-green">LOW risk</span></div>
-        <div class="dest-row"><span class="dest-type">↑</span><div><div class="dest-name">Cloud Data Engineer</div><div class="dest-skills">cloud · pipelines · ai_tools</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">ML Engineer</div><div class="dest-skills">python · ai_tools · cloud</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">Data Engineer</div><div class="dest-skills">pipelines · python · dq</div></div></div>
-      </div>
-
-      <div class="role-card">
-        <div class="role-name">Cloud Data Engineer <span class="pill pill-green">LOW risk</span></div>
-        <div class="dest-row"><span class="dest-type">↑</span><div><div class="dest-name">Data Architect</div><div class="dest-skills">cloud · modeling · strategic</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">ML Engineer</div><div class="dest-skills">ai_tools · python · cloud</div></div></div>
-        <div class="dest-row"><span class="dest-type">↗</span><div><div class="dest-name">AI / LLM Engineer</div><div class="dest-skills">ai_tools · pipelines · cloud</div></div></div>
-      </div>
-
-      <div class="role-card">
-        <div class="role-name">BI Developer / Analyst <span class="pill pill-red">HIGH risk</span></div>
-        <div class="dest-row"><span class="dest-type">↑</span><div><div class="dest-name">Analytics Engineer</div><div class="dest-skills">sql · modeling · bi_delivery</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">Data Product Manager</div><div class="dest-skills">storytelling · stakeholders · framing</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">Product Analyst</div><div class="dest-skills">domain · framing · bi_delivery</div></div></div>
-      </div>
-
-      <div class="role-card">
-        <div class="role-name">Data Analyst <span class="pill pill-red">HIGH risk</span></div>
-        <div class="dest-row"><span class="dest-type">↑</span><div><div class="dest-name">Product Analyst</div><div class="dest-skills">framing · domain · stakeholders</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">Analytics Engineer</div><div class="dest-skills">sql · modeling · python</div></div></div>
-        <div class="dest-row"><span class="dest-type">↗</span><div><div class="dest-name">Data Scientist</div><div class="dest-skills">python · ai_tools · framing</div></div></div>
-      </div>
-
-      <div class="role-card">
-        <div class="role-name">Product Analyst <span class="pill pill-amber">MEDIUM risk</span></div>
-        <div class="dest-row"><span class="dest-type">↑</span><div><div class="dest-name">Data Product Manager</div><div class="dest-skills">framing · domain · stakeholders</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">Marketing Analyst</div><div class="dest-skills">domain · storytelling · framing</div></div></div>
-        <div class="dest-row"><span class="dest-type">↗</span><div><div class="dest-name">Data Scientist</div><div class="dest-skills">ai_tools · python · modeling</div></div></div>
-      </div>
-
-      <div class="role-card">
-        <div class="role-name">Marketing Analyst <span class="pill pill-red">HIGH risk</span></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">Product Analyst</div><div class="dest-skills">domain · framing · storytelling</div></div></div>
-        <div class="dest-row"><span class="dest-type">↗</span><div><div class="dest-name">Data Scientist</div><div class="dest-skills">python · ai_tools · modeling</div></div></div>
-        <div class="dest-row"><span class="dest-type">↗</span><div><div class="dest-name">Data Product Manager</div><div class="dest-skills">strategic · stakeholders · bi_delivery</div></div></div>
-      </div>
-
-      <div class="role-card">
-        <div class="role-name">Financial Data Analyst <span class="pill pill-amber">MEDIUM risk</span></div>
-        <div class="dest-row"><span class="dest-type">↑</span><div><div class="dest-name">Data Scientist</div><div class="dest-skills">domain · modeling · python</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">Data Product Manager</div><div class="dest-skills">strategic · stakeholders · domain</div></div></div>
-        <div class="dest-row"><span class="dest-type">↗</span><div><div class="dest-name">Data Governance Manager</div><div class="dest-skills">compliance · domain · governance</div></div></div>
-      </div>
-
-      <div class="role-card">
-        <div class="role-name">Data Scientist <span class="pill pill-amber">MEDIUM risk</span></div>
-        <div class="dest-row"><span class="dest-type">↑</span><div><div class="dest-name">AI / LLM Engineer</div><div class="dest-skills">ai_tools · python · modeling</div></div></div>
-        <div class="dest-row"><span class="dest-type">↑</span><div><div class="dest-name">ML Engineer</div><div class="dest-skills">python · pipelines · ai_tools</div></div></div>
-        <div class="dest-row"><span class="dest-type">↗</span><div><div class="dest-name">Research Scientist</div><div class="dest-skills">modeling · ai_tools · strategic</div></div></div>
-      </div>
-
-      <div class="role-card">
-        <div class="role-name">ML Engineer <span class="pill pill-green">LOW risk</span></div>
-        <div class="dest-row"><span class="dest-type">↑</span><div><div class="dest-name">AI / LLM Engineer</div><div class="dest-skills">ai_tools · python · pipelines</div></div></div>
-        <div class="dest-row"><span class="dest-type">↗</span><div><div class="dest-name">Research Scientist</div><div class="dest-skills">modeling · python · strategic</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">Data Product Manager</div><div class="dest-skills">stakeholders · framing · strategic</div></div></div>
-      </div>
-
-      <div class="role-card">
-        <div class="role-name">AI / LLM Engineer <span class="pill pill-green">LOW risk</span></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">ML Engineer</div><div class="dest-skills">python · modeling · cloud</div></div></div>
-        <div class="dest-row"><span class="dest-type">↗</span><div><div class="dest-name">Research Scientist</div><div class="dest-skills">ai_tools · modeling · strategic</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">Data Product Manager</div><div class="dest-skills">framing · stakeholders · strategic</div></div></div>
-      </div>
-
-      <div class="role-card">
-        <div class="role-name">NLP Engineer <span class="pill pill-green">LOW risk</span></div>
-        <div class="dest-row"><span class="dest-type">↑</span><div><div class="dest-name">AI / LLM Engineer</div><div class="dest-skills">ai_tools · python · cloud</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">ML Engineer</div><div class="dest-skills">python · modeling · pipelines</div></div></div>
-        <div class="dest-row"><span class="dest-type">↗</span><div><div class="dest-name">Research Scientist</div><div class="dest-skills">modeling · ai_tools · domain</div></div></div>
-      </div>
-
-      <div class="role-card">
-        <div class="role-name">Research Scientist <span class="pill pill-green">LOW risk</span></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">AI / LLM Engineer</div><div class="dest-skills">ai_tools · python · modeling</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">ML Engineer</div><div class="dest-skills">python · cloud · pipelines</div></div></div>
-        <div class="dest-row"><span class="dest-type">↗</span><div><div class="dest-name">Chief Data Scientist / CDO</div><div class="dest-skills">strategic · stakeholders · framing</div></div></div>
-      </div>
-
-      <div class="role-card">
-        <div class="role-name">Data Governance Manager <span class="pill pill-amber">MEDIUM risk</span></div>
-        <div class="dest-row"><span class="dest-type">↑</span><div><div class="dest-name">Chief Data Officer</div><div class="dest-skills">strategic · governance · stakeholders</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">Data Product Manager</div><div class="dest-skills">stakeholders · domain · strategic</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">Data Architect</div><div class="dest-skills">modeling · metadata · governance</div></div></div>
-      </div>
-
-      <div class="role-card">
-        <div class="role-name">Data Steward <span class="pill pill-red">HIGH risk</span></div>
-        <div class="dest-row"><span class="dest-type">↑</span><div><div class="dest-name">Data Governance Manager</div><div class="dest-skills">governance · dq · metadata</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">Metadata / Catalog Analyst</div><div class="dest-skills">metadata · dq · governance</div></div></div>
-        <div class="dest-row"><span class="dest-type">↗</span><div><div class="dest-name">Data Product Manager</div><div class="dest-skills">domain · stakeholders · framing</div></div></div>
-      </div>
-
-      <div class="role-card">
-        <div class="role-name">Chief Data Officer <span class="pill pill-green">LOW risk</span></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">Data Product Manager</div><div class="dest-skills">strategic · stakeholders · domain</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">Data Governance Manager</div><div class="dest-skills">governance · compliance · strategic</div></div></div>
-        <div class="dest-row"><span class="dest-type">↗</span><div><div class="dest-name">Chief AI Officer / COO</div><div class="dest-skills">ai_tools · strategic · domain</div></div></div>
-      </div>
-
-      <div class="role-card">
-        <div class="role-name">Data Product Manager <span class="pill pill-green">LOW risk</span></div>
-        <div class="dest-row"><span class="dest-type">↑</span><div><div class="dest-name">Chief Data Officer</div><div class="dest-skills">strategic · stakeholders · domain</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">Product Analyst</div><div class="dest-skills">framing · storytelling · bi_delivery</div></div></div>
-        <div class="dest-row"><span class="dest-type">↗</span><div><div class="dest-name">AI Product Manager</div><div class="dest-skills">ai_tools · strategic · framing</div></div></div>
-      </div>
-
-      <div class="role-card">
-        <div class="role-name">Metadata / Catalog Analyst <span class="pill pill-red">HIGH risk</span></div>
-        <div class="dest-row"><span class="dest-type">↑</span><div><div class="dest-name">Data Governance Manager</div><div class="dest-skills">governance · metadata · compliance</div></div></div>
-        <div class="dest-row"><span class="dest-type">↔</span><div><div class="dest-name">Data Steward</div><div class="dest-skills">dq · governance · domain</div></div></div>
-        <div class="dest-row"><span class="dest-type">↗</span><div><div class="dest-name">Data Architect</div><div class="dest-skills">modeling · metadata · governance</div></div></div>
-      </div>
-
+    <div class="callout">
+      <strong>AI/LLM tools → 5 for all archetypes.</strong> The only score all four models gave unanimously to every role.
+      "By 2027 this is not a specialist skill — it is the baseline expectation for anyone who touches data.
+      The question is no longer whether you use AI tools but how well." — Grok 4
+    </div>
+    <div class="callout callout-teal">
+      <strong>Python for Data Engineers → 3 (was 5).</strong> Code generation handles boilerplate pipelines and
+      transformations. The human premium is in architecture, debugging AI-generated code, and knowing when
+      <em>not</em> to use a framework.
+    </div>
+    <div class="callout callout-coral">
+      <strong>BI delivery for Data Engineers → 2.</strong> Dashboard templates and AI-generated visualisations
+      flatten this curve fast. DEs who own only BI delivery are exposed. The pivot is to data modeling
+      and pipeline architecture.
+    </div>
+    <div class="callout callout-purple">
+      <strong>Executive storytelling for Analysts → 5 (unchanged).</strong> This is AI-resistant. The ability
+      to distill ambiguous data into a decision a CFO will act on requires human context, political judgment,
+      and relationship capital. Every model scored this 5 for AN with full confidence.
     </div>
   </div>
 
-  <!-- ─── SECTION 4: EMERGING SKILLS ─── -->
+  <!-- SECTION 2: DEMAND BY ARCHETYPE -->
   <div class="section">
-    <div class="section-title">Section 4 of 4</div>
-    <h2>Skills on the Horizon (Not Yet in the Survey)</h2>
+    <div class="section-title">Section 02</div>
+    <h2>Consensus Demand Scores by Archetype</h2>
     <p class="lead">
-      Beyond the 16 core skills, all four models flagged new capabilities that are
-      becoming important but aren't yet standard job requirements. These are ranked
-      by how many models mentioned them.
+      Scores are 4-model averages, rounded to integer. Each archetype's colour-coded below.
     </p>
+
+    <!-- Archetype legend -->
+    <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;">
+        <span style="width:10px;height:10px;border-radius:50%;background:#1d7a6b;display:inline-block;"></span> DE — Data Engineering
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;">
+        <span style="width:10px;height:10px;border-radius:50%;background:#e88c2a;display:inline-block;"></span> AN — Analytics &amp; BI
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;">
+        <span style="width:10px;height:10px;border-radius:50%;background:#5c4db1;display:inline-block;"></span> DS — Data Science
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;">
+        <span style="width:10px;height:10px;border-radius:50%;background:#2c6e49;display:inline-block;"></span> GV — Governance &amp; Management
+      </div>
+    </div>
+
+    <!-- Full comparison table -->
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Skill</th>
+            <th style="text-align:center">DE ✦✦</th>
+            <th style="text-align:center">AN ✦✦✦</th>
+            <th style="text-align:center">DS ✦✦</th>
+            <th style="text-align:center">GV ✦✦✦</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="skill-name" style="color:var(--teal);font-weight:600;">AI / LLM Tools</td>
+            <td class="num" style="color:var(--teal);">5</td><td class="num" style="color:var(--teal);">5</td>
+            <td class="num" style="color:var(--teal);">5</td><td class="num" style="color:var(--teal);">3</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Cloud Platforms</td>
+            <td class="num">5</td><td class="num">4</td><td class="num">4</td><td class="num">3</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Data Pipelines / ETL</td>
+            <td class="num">4</td><td class="num">2</td><td class="num">3</td><td class="num">2</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Data Modeling</td>
+            <td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">3</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Data Quality Frameworks</td>
+            <td class="num">4</td><td class="num">3</td><td class="num">3</td><td class="num">5</td>
+          </tr>
+          <tr>
+            <td class="skill-name">SQL &amp; Query Fluency</td>
+            <td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">2</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Python / Scripting</td>
+            <td class="num">3</td><td class="num">2</td><td class="num">4</td><td class="num">2</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Metadata &amp; Cataloging</td>
+            <td class="num">3</td><td class="num">3</td><td class="num">2</td><td class="num">5</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Governance &amp; Policy</td>
+            <td class="num">3</td><td class="num">2</td><td class="num">3</td><td class="num">5</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Business Domain Knowledge</td>
+            <td class="num">3</td><td class="num">5</td><td class="num">4</td><td class="num">4</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Stakeholder Communication</td>
+            <td class="num">3</td><td class="num">5</td><td class="num">4</td><td class="num">5</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Business Problem Framing</td>
+            <td class="num">3</td><td class="num">5</td><td class="num">5</td><td class="num">4</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Regulatory Fluency</td>
+            <td class="num">3</td><td class="num">2</td><td class="num">2</td><td class="num">5</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Strategic Thinking</td>
+            <td class="num">3</td><td class="num">4</td><td class="num">4</td><td class="num">5</td>
+          </tr>
+          <tr>
+            <td class="skill-name" style="color:var(--amber);font-weight:600;">Executive Storytelling</td>
+            <td class="num" style="color:var(--muted);">2</td>
+            <td class="num" style="color:var(--amber);">5</td>
+            <td class="num">4</td>
+            <td class="num">4</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Analytics &amp; BI Delivery</td>
+            <td class="num" style="color:var(--muted);">2</td><td class="num">4</td>
+            <td class="num" style="color:var(--muted);">2</td><td class="num" style="color:var(--muted);">2</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Per-skill level interpretations -->
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:16px;">What each score means for <em>you</em></h3>
+    <div class="two-col">
+      <div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;">AI / LLM TOOLS</div>
+        <table class="level-table">
+          <tr><td>1</td><td>Has heard of ChatGPT 🙋</td></tr>
+          <tr><td>2</td><td>Pastes SQL errors into Claude, hopes for the best</td></tr>
+          <tr><td>3</td><td>Uses AI for code drafts, still reviews carefully</td></tr>
+          <tr><td>4</td><td>Agents, custom prompts, automates whole workflows</td></tr>
+          <tr><td>5</td><td>Builds AI-augmented pipelines from scratch. Your team copies you 🏆</td></tr>
+        </table>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;">EXECUTIVE STORYTELLING</div>
+        <table class="level-table">
+          <tr><td>1</td><td>Dumps a dashboard link in Slack and hopes 🙈</td></tr>
+          <tr><td>2</td><td>Writes up findings, no clear recommendation</td></tr>
+          <tr><td>3</td><td>So-what is clear; exec still needs to do some work</td></tr>
+          <tr><td>4</td><td>One slide, one number, one decision. Works every time</td></tr>
+          <tr><td>5</td><td>The CFO forwards your deck to the board with their name on it 🎯</td></tr>
+        </table>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;">DATA PIPELINES / ETL</div>
+        <table class="level-table">
+          <tr><td>1</td><td>Copies the CSV manually. Every. Day 🙈</td></tr>
+          <tr><td>2</td><td>Has written a cron job, once, nervously</td></tr>
+          <tr><td>3</td><td>Owns a production Airflow or dbt pipeline</td></tr>
+          <tr><td>4</td><td>Designed multi-source pipelines with SLAs and monitoring</td></tr>
+          <tr><td>5</td><td>Platform others build on. You set the data contract standards 🏛️</td></tr>
+        </table>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;">BUSINESS PROBLEM FRAMING</div>
+        <table class="level-table">
+          <tr><td>1</td><td>Builds exactly what was asked for 🤷</td></tr>
+          <tr><td>2</td><td>Sometimes asks "why?" before building</td></tr>
+          <tr><td>3</td><td>Routinely challenges requirements and reframes the problem</td></tr>
+          <tr><td>4</td><td>Translates messy business asks into precise analytical questions</td></tr>
+          <tr><td>5</td><td>Stakeholders come to you before they write requirements 🎯</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: WHERE THE SCORES CHANGED FROM HISTORY -->
+  <div class="section">
+    <div class="section-title">Section 03</div>
+    <h2>AI-Rising vs AI-Declining Skill Demand</h2>
+    <p class="lead">
+      The biggest story in this data is not which skills matter — it's which direction they're moving,
+      and how fast.
+    </p>
+    <div class="two-col">
+      <div class="card" style="border-color:var(--teal);background:var(--teal-bg);">
+        <h3 style="color:var(--teal);">🚀 AI-Rising</h3>
+        <ul>
+          <li><strong>AI/LLM Tools</strong> — from optional to mandatory, all archetypes</li>
+          <li><strong>Business Problem Framing</strong> — AI does the analysis; humans ask the right question</li>
+          <li><strong>Stakeholder Communication</strong> — AI generates the insight; humans sell it</li>
+          <li><strong>Data Governance</strong> — AI systems need guardrails; GV becomes strategic</li>
+          <li><strong>Metadata &amp; Cataloging</strong> — AI agents can't work with undocumented data</li>
+        </ul>
+      </div>
+      <div class="card" style="border-color:var(--coral);background:var(--coral-bg);">
+        <h3 style="color:var(--coral);">📉 AI-Declining</h3>
+        <ul>
+          <li><strong>Python boilerplate</strong> — code-gen handles ETL scaffolding and transforms</li>
+          <li><strong>Basic BI delivery</strong> — dashboard templates and AI charting flatten this curve</li>
+          <li><strong>Routine SQL queries</strong> — text-to-SQL is reliable; complex optimisation still human</li>
+          <li><strong>Manual data cleaning</strong> — AI-powered DQ tools automate the obvious errors</li>
+          <li><strong>Standard report writing</strong> — first drafts are AI's job now</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout">
+      <strong>The meta-shift:</strong> Data careers are bifurcating. Technical roles that stay close to
+      infrastructure and architecture retain high value. Roles that were primarily about producing outputs
+      (reports, dashboards, SQL queries) face commoditisation unless they climb toward framing, storytelling,
+      and strategic judgment.
+    </div>
+  </div>
+
+  <!-- SECTION 4: MODEL QUOTES -->
+  <div class="section">
+    <div class="section-title">Section 04</div>
+    <h2>What the Models Said</h2>
+
+    <div class="quote">
+      "The most durable data professional in 2027 is not the one who writes the best SQL — it's the one
+      who knows which question to ask, can get a stakeholder to fund the answer, and can explain the result
+      to someone who doesn't know what a p-value is. AI handles the middle. Humans own the edges."
+      <cite>— GPT-5.3, summarising the skill hierarchy for data careers in 2027</cite>
+    </div>
+
+    <div class="quote">
+      "I scored AI tools at 5 across every data archetype without hesitation. If you're a data professional
+      in 2027 and you're not fluent with LLMs, you are competing with people who are 3–5× as productive as you.
+      This is not a niche skill. It is the baseline."
+      <cite>— Grok 4, on the AI/LLM tools consensus score</cite>
+    </div>
+
+    <div class="quote">
+      "Data Governance is getting a second wind — not because the field changed, but because AI systems
+      need clean, documented, contracted data to function. The governance professional who understands
+      how AI agents consume data will be in enormous demand by 2027."
+      <cite>— Gemini 3.1 Pro, on the elevated scores for GV archetype</cite>
+    </div>
+
+    <div class="quote">
+      "Python scored 3 for Data Engineers deliberately. I'm not saying Python isn't important — I'm saying
+      the human premium in writing Python pipelines is shrinking fast. The DE who thrives in 2027
+      designs the architecture, reviews AI-generated code, and owns the reliability contracts.
+      They don't necessarily write every transform by hand."
+      <cite>— Claude Opus 4.7, explaining the Python score for Data Engineers</cite>
+    </div>
+  </div>
+
+  <!-- SECTION 5: ROLE DISRUPTION RISK -->
+  <div class="section">
+    <div class="section-title">Section 05</div>
+    <h2>Role Disruption Risk by Data Title</h2>
+    <p class="lead">All four models converged on these risk classifications.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Role</th><th>Risk</th><th>Why</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="skill-name">Data Steward / Metadata Analyst</td>
+            <td><span class="disruption-high">HIGH</span></td>
+            <td style="font-size:13px;color:var(--muted);">Repetitive cataloging and quality checks increasingly automated; role needs to evolve toward governance strategy</td>
+          </tr>
+          <tr>
+            <td class="skill-name">BI Developer / Report Builder</td>
+            <td><span class="disruption-high">HIGH</span></td>
+            <td style="font-size:13px;color:var(--muted);">Dashboard generation and standard reporting are prime AI targets; value is moving to framing and insight, not production</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Data Analyst</td>
+            <td><span class="disruption-high">HIGH</span></td>
+            <td style="font-size:13px;color:var(--muted);">Ad-hoc SQL and basic statistical analysis commoditise rapidly; the pivot is toward product/domain analyst</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Analytics Engineer</td>
+            <td><span class="disruption-med">MEDIUM</span></td>
+            <td style="font-size:13px;color:var(--muted);">Data modeling and transformation layer retain human value; semantic layer design is still non-trivial</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Data Scientist</td>
+            <td><span class="disruption-med">MEDIUM</span></td>
+            <td style="font-size:13px;color:var(--muted);">Routine modeling and feature engineering automated; domain-specific experimentation and framing remain human</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Data Engineer</td>
+            <td><span class="disruption-low">LOW</span></td>
+            <td style="font-size:13px;color:var(--muted);">Platform architecture, reliability SLAs, and cost engineering require human ownership at scale</td>
+          </tr>
+          <tr>
+            <td class="skill-name">ML / AI Engineer</td>
+            <td><span class="disruption-low">LOW</span></td>
+            <td style="font-size:13px;color:var(--muted);">Building and evaluating AI systems is the meta-skill of the era — high and growing demand</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Data Governance Manager</td>
+            <td><span class="disruption-low">LOW</span></td>
+            <td style="font-size:13px;color:var(--muted);">AI governance, compliance frameworks, and cross-system data contracts are durable, growing concerns</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Chief Data Officer / Head of Data</td>
+            <td><span class="disruption-low">LOW</span></td>
+            <td style="font-size:13px;color:var(--muted);">Strategic direction, organisational buy-in, and AI ethics accountability are irreducibly human leadership concerns</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 6: EMERGING SKILLS -->
+  <div class="section">
+    <div class="section-title">Section 06</div>
+    <h2>5 Emerging Skills Not Yet in the Survey</h2>
+    <p class="lead">Surfaced by 3+ models as table stakes by 2028 but barely visible in 2026 job descriptions.</p>
 
     <div class="skill-row">
       <div class="skill-signal">4/4<br>🔥</div>
       <div class="skill-body">
-        <strong>AI Agent Orchestration</strong>
-        <p>Building, monitoring, and managing systems where AI agents work autonomously to complete data tasks. This goes well beyond basic prompt engineering.</p>
+        <strong>AI Agent Orchestration for Data</strong>
+        <p>Building pipelines where AI agents ingest, transform, and validate data autonomously.
+        Goes well beyond prompt engineering — includes eval loops, error handling, and cost governance.</p>
         <div class="roles">
-          <span class="pill pill-green">DE</span>
-          <span class="pill pill-purple">DS</span>
-          <span class="pill pill-amber">AN</span>
+          <span class="pill pill-de">DE</span><span class="pill pill-ds">DS</span>
         </div>
       </div>
     </div>
@@ -728,10 +555,10 @@
       <div class="skill-signal">4/4<br>🔥</div>
       <div class="skill-body">
         <strong>AI Governance &amp; Responsible AI</strong>
-        <p>Making sure AI systems are fair, explainable, and compliant with new regulations like the EU AI Act. Distinct from traditional data governance — it's about model risk, bias, and transparency.</p>
+        <p>Model risk management, bias detection, and compliance with the EU AI Act and similar frameworks.
+        Distinct from traditional data governance — it's about model outputs, not just data inputs.</p>
         <div class="roles">
-          <span class="pill pill-gray">GV</span>
-          <span class="pill pill-purple">DS</span>
+          <span class="pill pill-gv">GV</span><span class="pill pill-ds">DS</span>
         </div>
       </div>
     </div>
@@ -740,35 +567,22 @@
       <div class="skill-signal">3/4</div>
       <div class="skill-body">
         <strong>Vector Search &amp; Semantic Data</strong>
-        <p>Storing and searching data using AI embeddings rather than exact keywords. The backbone of modern RAG systems and LLM-powered applications.</p>
+        <p>Storing and retrieving data via embeddings rather than exact keywords.
+        Core infrastructure for RAG systems, semantic search, and LLM-powered data products.</p>
         <div class="roles">
-          <span class="pill pill-green">DE</span>
-          <span class="pill pill-purple">DS</span>
+          <span class="pill pill-de">DE</span><span class="pill pill-ds">DS</span>
         </div>
       </div>
     </div>
 
     <div class="skill-row">
-      <div class="skill-signal">2/4</div>
-      <div class="skill-body">
-        <strong>Real-time Streaming Analytics</strong>
-        <p>Processing data the moment it arrives (not in nightly batches) — required for fraud detection, personalisation, and IoT use cases.</p>
-        <div class="roles">
-          <span class="pill pill-green">DE</span>
-          <span class="pill pill-amber">AN</span>
-          <span class="pill pill-purple">DS</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="skill-row">
-      <div class="skill-signal">2/4</div>
+      <div class="skill-signal">3/4</div>
       <div class="skill-body">
         <strong>Data Contracts &amp; Schema Evolution</strong>
-        <p>Formal agreements between teams about what data looks like and how it changes over time — critical as AI systems consume data automatically and can't handle surprises.</p>
+        <p>Formal, versioned agreements between data producers and consumers.
+        Critical as AI agents consume data automatically and can't tolerate silent schema changes.</p>
         <div class="roles">
-          <span class="pill pill-green">DE</span>
-          <span class="pill pill-gray">GV</span>
+          <span class="pill pill-de">DE</span><span class="pill pill-gv">GV</span>
         </div>
       </div>
     </div>
@@ -776,21 +590,27 @@
     <div class="skill-row">
       <div class="skill-signal">2/4</div>
       <div class="skill-body">
-        <strong>FinOps / Cloud Cost Engineering</strong>
-        <p>Understanding and reducing cloud and AI inference costs. Data pipelines and model serving can become very expensive very quickly, and employers increasingly expect engineers to own this.</p>
+        <strong>FinOps / AI Inference Cost Engineering</strong>
+        <p>As AI inference bills dwarf server bills, someone needs to own token budgets,
+        model tiering decisions, and cloud spend governance for data AI workloads.</p>
         <div class="roles">
-          <span class="pill pill-green">DE</span>
-          <span class="pill pill-gray">GV</span>
+          <span class="pill pill-de">DE</span><span class="pill pill-gv">GV</span>
         </div>
       </div>
     </div>
-
   </div>
 
-  <!-- ─── FOOTER ─── -->
+  <!-- FOOTER -->
   <footer>
-    <p>This report was generated using structured prompts sent to Claude Opus 4.7, GPT-5.3, Gemini 3.1 Pro, and Grok 2026.1 on 2 May 2026. Scores represent the consensus of AI model projections, not official labour market data. They are used to calibrate demand estimates within the Skill Navigator survey.</p>
-    <p style="margin-top:8px;">Skill Navigator &nbsp;·&nbsp; gadsetgo/Survey</p>
+    <p>
+      Structured prompts were sent to Grok 4 (xAI), GPT-5.3 (OpenAI), Gemini 3.1 Pro (Google),
+      and Claude Opus 4.7 (Anthropic) on 2 May 2026. Scores represent AI model consensus projections,
+      not official labour market data. They calibrate the 2027 demand estimates used in the Skill Navigator survey.
+    </p>
+    <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <span>Skill Navigator · EST. 2026 · v2.5</span>
+      <a href="/" style="color:var(--teal);text-decoration:none;font-weight:500;">← Back to your skill map</a>
+    </div>
   </footer>
 
 </div>

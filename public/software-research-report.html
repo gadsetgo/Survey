@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2027 Software Engineering Skills Research Report</title>
+  <style>
+    :root {
+      --bg: #fdf8f0;
+      --fg: #1a1410;
+      --muted: #6b5e52;
+      --rule: #e8dcc8;
+      --amber: #e88c2a;
+      --teal: #1d7a6b;
+      --purple: #5c4db1;
+      --coral: #d95f3b;
+      --yellow-bg: #fdf0d5;
+      --teal-bg: #e4f5f2;
+      --purple-bg: #eeeafb;
+      --coral-bg: #fdeee9;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      padding: 32px 16px 80px;
+    }
+
+    .page { max-width: 760px; margin: 0 auto; }
+
+    .report-header {
+      border-bottom: 2px solid var(--fg);
+      padding-bottom: 20px;
+      margin-bottom: 32px;
+    }
+    .report-header .eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
+      color: var(--muted); text-transform: uppercase; margin-bottom: 8px;
+    }
+    .report-header h1 {
+      font-size: 28px; font-weight: 800; letter-spacing: -0.03em;
+      line-height: 1.1; margin-bottom: 10px;
+    }
+    .report-header .subtitle { font-size: 14px; color: var(--muted); max-width: 560px; }
+    .model-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .badge {
+      font-size: 11px; font-weight: 600; padding: 4px 10px;
+      border-radius: 999px; border: 1px solid var(--rule); color: var(--muted);
+    }
+
+    .section { margin-bottom: 48px; }
+    .section-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
+    }
+    .section h2 {
+      font-size: 20px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;
+    }
+    .section .lead {
+      font-size: 14px; color: var(--muted); margin-bottom: 20px; max-width: 600px;
+    }
+
+    .callout {
+      background: var(--yellow-bg); border-left: 3px solid var(--amber);
+      padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 14px; margin-bottom: 20px;
+    }
+    .callout strong { color: var(--amber); }
+    .callout-teal { background: var(--teal-bg); border-left-color: var(--teal); }
+    .callout-teal strong { color: var(--teal); }
+    .callout-purple { background: var(--purple-bg); border-left-color: var(--purple); }
+    .callout-purple strong { color: var(--purple); }
+
+    .table-wrap { overflow-x: auto; margin-bottom: 24px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead tr { border-bottom: 2px solid var(--fg); }
+    thead th {
+      text-align: left; padding: 8px 10px; font-size: 11px;
+      font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); white-space: nowrap;
+    }
+    tbody tr { border-bottom: 1px solid var(--rule); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody td { padding: 8px 10px; vertical-align: middle; }
+    .skill-name { font-weight: 500; }
+    .num { text-align: center; font-variant-numeric: tabular-nums; }
+    .avg { font-weight: 700; color: var(--amber); text-align: center; }
+
+    .score-bar { display: flex; align-items: center; gap: 8px; }
+    .bar-track {
+      flex: 1; height: 6px; background: var(--rule);
+      border-radius: 999px; overflow: hidden;
+    }
+    .bar-fill { height: 100%; border-radius: 999px; background: var(--amber); }
+    .bar-val { font-size: 12px; font-weight: 700; width: 28px; text-align: right; color: var(--fg); }
+
+    .confidence {
+      display: inline-flex; align-items: center; gap: 2px;
+      font-size: 11px; color: var(--muted);
+    }
+    .star-full  { color: var(--amber); }
+    .star-empty { color: var(--rule); }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+    @media (max-width: 520px) { .two-col { grid-template-columns: 1fr; } }
+
+    .card {
+      border: 1px solid var(--rule); border-radius: 10px; padding: 16px;
+    }
+    .card h3 { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+    .card ul { padding-left: 18px; }
+    .card li { font-size: 13px; margin-bottom: 6px; color: var(--muted); }
+    .card li strong { color: var(--fg); }
+
+    .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .pill {
+      font-size: 12px; font-weight: 500; padding: 5px 12px;
+      border-radius: 999px; border: 1px solid var(--rule);
+    }
+
+    .quote {
+      background: var(--yellow-bg); border-radius: 8px;
+      padding: 16px 20px; margin-bottom: 16px; font-style: italic; font-size: 14px;
+    }
+    .quote cite {
+      display: block; margin-top: 8px; font-style: normal;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: var(--muted);
+    }
+
+    .level-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+    .level-table td { padding: 6px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+    .level-table td:first-child {
+      font-weight: 700; width: 32px; text-align: center;
+      color: var(--amber); font-size: 16px;
+    }
+    .level-table tr:last-child td { border-bottom: none; }
+
+    .disruption-high { color: var(--coral); font-weight: 600; }
+    .disruption-med  { color: var(--amber); font-weight: 600; }
+    .disruption-low  { color: var(--teal);  font-weight: 600; }
+
+    .arch-col { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    @media (max-width: 520px) { .arch-col { grid-template-columns: 1fr; } }
+    .arch-card {
+      border: 1px solid var(--rule); border-radius: 8px; padding: 14px;
+    }
+    .arch-card .arch-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="report-header">
+    <div class="eyebrow">Research Report · May 2026</div>
+    <h1>What Software Engineering Skills Will Matter Most in 2027?</h1>
+    <p class="subtitle">
+      Four frontier AI models scored 16 engineering skills across four archetypes.
+      Here's what they agreed on — and where the gaps surprised us.
+    </p>
+    <div class="model-badges">
+      <span class="badge">Grok 4 · xAI</span>
+      <span class="badge">GPT-5.3 · OpenAI</span>
+      <span class="badge">Gemini 3.1 Pro · Google</span>
+      <span class="badge">Claude Opus 4.7 · Anthropic</span>
+    </div>
+  </div>
+
+  <!-- HOW TO READ -->
+  <div class="section">
+    <div class="section-title">How to read this report</div>
+    <h2>Scoring key &amp; confidence</h2>
+    <p class="lead">
+      Each model rated skill demand on a 1–5 scale for 2027. Scores were averaged and
+      rounded to the nearest integer. Confidence (✦) reflects cross-model agreement.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Score</th>
+            <th>Meaning</th>
+            <th>Confidence ✦</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="num">5</td><td>Must-have · table stakes by 2027</td><td>✦✦✦</td><td>All 4 models agreed within ±0.5</td></tr>
+          <tr><td class="num">4</td><td>High demand · strong differentiator</td><td>✦✦</td><td>3 of 4 models within ±1</td></tr>
+          <tr><td class="num">3</td><td>Solid baseline · expected at mid-level</td><td>✦</td><td>Majority aligned, some spread</td></tr>
+          <tr><td class="num">2</td><td>Nice to have · AI can partially substitute</td><td></td><td>Notable disagreement (&gt;±1.5)</td></tr>
+          <tr><td class="num">1</td><td>AI-discounted · automation takes the repetitive core</td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <strong>AI discount applied.</strong> Skills where AI tooling already automates the majority of the repetitive work (e.g. syntax, boilerplate, LeetCode-style algorithms) were scored lower than the underlying discipline might suggest. We asked each model to score <em>human-added value</em> — not the skill's historical prestige.
+    </div>
+  </div>
+
+  <!-- SECTION 1: AI DISCOUNT METHODOLOGY -->
+  <div class="section">
+    <div class="section-title">Section 01</div>
+    <h2>The AI Discount — Why Some Scores Seem Low</h2>
+    <p class="lead">
+      We told every model: "Score the demand for <em>human expertise</em> in 2027. If AI tooling handles 80% of
+      the cognitive load, score it accordingly." Here's what got hit hardest — and why.
+    </p>
+
+    <div class="callout">
+      <strong>Algorithms &amp; Data Structures → 1–2.</strong> "AI beats you at LeetCode every time. Copilot, Claude Code,
+      and GPT can generate sorting algorithms, graph traversals, and DP solutions faster than any human. The signal
+      is in knowing <em>when</em> to apply them — not in coding them from scratch." — consensus across all 4 models.
+    </div>
+
+    <div class="callout callout-teal">
+      <strong>Language Proficiency → 3.</strong> Syntax is commoditised. Any model can write Python, Go, TypeScript, or Rust.
+      The human skill that remains? Reading unfamiliar codebases, making architectural tradeoffs between languages,
+      and debugging the output of AI-generated code. Still valuable — just not the moat it was.
+    </div>
+
+    <div class="callout callout-purple">
+      <strong>AI-Assisted Development → 5.</strong> The highest possible score for a reason. By 2027, engineers who
+      can direct AI coding tools, write effective prompts, evaluate AI output critically, and catch subtle bugs in
+      generated code will ship 3–10× faster. This is the meta-skill that amplifies everything else.
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Skill</th>
+            <th style="text-align:center">Score</th>
+            <th>Reasoning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="skill-name">Algorithms &amp; Data Structures</td><td class="avg">1–2</td><td>AI generates solutions; human role shrinks to judgment and verification</td></tr>
+          <tr><td class="skill-name">Language Proficiency</td><td class="avg">3</td><td>Syntax is table stakes; code-gen handles boilerplate</td></tr>
+          <tr><td class="skill-name">Databases</td><td class="avg">2–4</td><td>Ranges wide by archetype — architects need deep knowledge; FE engineers don't</td></tr>
+          <tr><td class="skill-name">BI Delivery (data track)</td><td class="avg">2</td><td>Dashboard templates and AI-generated charts flatten this curve</td></tr>
+          <tr><td class="skill-name">AI-Assisted Development</td><td class="avg">5</td><td>The force multiplier — highest human value premium in 2027</td></tr>
+          <tr><td class="skill-name">Security Engineering</td><td class="avg">4–5</td><td>AI-resistant — adversarial creativity requires human judgment</td></tr>
+          <tr><td class="skill-name">System Design</td><td class="avg">3–5</td><td>Scales with seniority; AI can suggest patterns but can't own tradeoffs</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 2: SKILL DEMAND BY ARCHETYPE -->
+  <div class="section">
+    <div class="section-title">Section 02</div>
+    <h2>Skill Demand by Archetype</h2>
+    <p class="lead">
+      Four archetypes, 16 skills each. Scores reflect 2027 demand for human expertise,
+      post-AI-discount. Confidence ✦ shown per archetype column.
+    </p>
+
+    <div class="arch-col" style="margin-bottom: 8px;">
+      <div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;">
+        <span style="width:10px;height:10px;border-radius:50%;background:#1d7a6b;display:inline-block;"></span> FE — Frontend &amp; UI
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;">
+        <span style="width:10px;height:10px;border-radius:50%;background:#d95f3b;display:inline-block;"></span> BE — Backend &amp; APIs
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;">
+        <span style="width:10px;height:10px;border-radius:50%;background:#5c4db1;display:inline-block;"></span> PE — Platform / DevOps / SRE
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;">
+        <span style="width:10px;height:10px;border-radius:50%;background:#e88c2a;display:inline-block;"></span> AR — Architecture &amp; Leadership
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Skill</th>
+            <th style="text-align:center">FE ✦✦</th>
+            <th style="text-align:center">BE ✦✦✦</th>
+            <th style="text-align:center">PE ✦✦✦</th>
+            <th style="text-align:center">AR ✦✦✦</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="skill-name">Language Proficiency</td>
+            <td class="num">3</td><td class="num">3</td><td class="num">3</td><td class="num">3</td>
+          </tr>
+          <tr>
+            <td class="skill-name">System Design</td>
+            <td class="num">3</td><td class="num">5</td><td class="num">5</td><td class="num">5</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Cloud &amp; Infrastructure</td>
+            <td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">4</td>
+          </tr>
+          <tr>
+            <td class="skill-name" style="color:var(--teal);font-weight:600;">AI-Assisted Development</td>
+            <td class="num" style="color:var(--teal);">5</td><td class="num" style="color:var(--teal);">5</td><td class="num" style="color:var(--teal);">5</td><td class="num" style="color:var(--teal);">5</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Testing &amp; Quality</td>
+            <td class="num">3</td><td class="num">4</td><td class="num">4</td><td class="num">4</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Application Security</td>
+            <td class="num">4</td><td class="num">5</td><td class="num">5</td><td class="num">5</td>
+          </tr>
+          <tr>
+            <td class="skill-name" style="color:var(--muted);">Algorithms &amp; Data Structures</td>
+            <td class="num" style="color:var(--muted);">1</td><td class="num" style="color:var(--muted);">2</td><td class="num" style="color:var(--muted);">2</td><td class="num" style="color:var(--muted);">2</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Database Engineering</td>
+            <td class="num">2</td><td class="num">4</td><td class="num">3</td><td class="num">4</td>
+          </tr>
+          <tr>
+            <td class="skill-name">CI/CD &amp; DevOps</td>
+            <td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">4</td>
+          </tr>
+          <tr>
+            <td class="skill-name">API Design</td>
+            <td class="num">3</td><td class="num">5</td><td class="num">3</td><td class="num">5</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Performance Engineering</td>
+            <td class="num">4</td><td class="num">4</td><td class="num">5</td><td class="num">4</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Software Architecture</td>
+            <td class="num">3</td><td class="num">5</td><td class="num">4</td><td class="num">5</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Code Review &amp; Mentorship</td>
+            <td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">5</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Product Thinking</td>
+            <td class="num">5</td><td class="num">4</td><td class="num">3</td><td class="num">5</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Communication &amp; Docs</td>
+            <td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">5</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Technical Leadership</td>
+            <td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">5</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="font-size:12px;color:var(--muted);margin-top:-12px;margin-bottom:24px;">
+      ✦ = moderate agreement · ✦✦ = 3 of 4 models within ±1 · ✦✦✦ = all 4 within ±0.5
+    </p>
+
+    <!-- Per-skill level interpretations -->
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:16px;">What each score means for <em>you</em></h3>
+
+    <div class="two-col">
+      <div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;">AI-ASSISTED DEVELOPMENT</div>
+        <table class="level-table">
+          <tr><td>1</td><td>Still typing without autocomplete 🙈</td></tr>
+          <tr><td>2</td><td>Accepts Copilot suggestions, rarely prompts</td></tr>
+          <tr><td>3</td><td>Writes prompts, iterates, spot-checks output</td></tr>
+          <tr><td>4</td><td>Agents, custom instructions, reviews generated code critically</td></tr>
+          <tr><td>5</td><td>You direct the AI, review, and ship. Faster than any solo coder 🏆</td></tr>
+        </table>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;">ALGORITHMS &amp; DATA STRUCTURES</div>
+        <table class="level-table">
+          <tr><td>1</td><td>AI beats you at this every time 🤖</td></tr>
+          <tr><td>2</td><td>You know Big-O; AI writes the code</td></tr>
+          <tr><td>3</td><td>Can review and optimise AI-generated solutions</td></tr>
+          <tr><td>4</td><td>Identifies the right algorithm family for novel problems</td></tr>
+          <tr><td>5</td><td>Original research-level — rare and not the bottleneck in most teams</td></tr>
+        </table>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;">SYSTEM DESIGN</div>
+        <table class="level-table">
+          <tr><td>1</td><td>Monolith or bust — deployment is someone else's problem</td></tr>
+          <tr><td>2</td><td>Knows what a load balancer is. Mostly theoretical</td></tr>
+          <tr><td>3</td><td>Has designed a 3-tier system; can reason about CAP theorem</td></tr>
+          <tr><td>4</td><td>Designs for 10× traffic, failure modes, and cost</td></tr>
+          <tr><td>5</td><td>Org-wide design decisions; nobody builds without your sign-off 🏛️</td></tr>
+        </table>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;">SECURITY ENGINEERING</div>
+        <table class="level-table">
+          <tr><td>1</td><td>Passwords are hashed? Probably fine 🤷</td></tr>
+          <tr><td>2</td><td>Knows OWASP Top 10, hasn't acted on it</td></tr>
+          <tr><td>3</td><td>Writes secure-by-default code, attends threat-model reviews</td></tr>
+          <tr><td>4</td><td>Leads security reviews; designs auth/authz from scratch</td></tr>
+          <tr><td>5</td><td>AI-resistant adversarial thinking. Finds what others miss 🛡️</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: AI-RISING vs AI-DECLINING -->
+  <div class="section">
+    <div class="section-title">Section 03</div>
+    <h2>AI-Rising Skills vs AI-Declining Skills</h2>
+    <p class="lead">The split is stark. Human judgment and creativity accelerate; repetitive technical execution commoditises.</p>
+
+    <div class="two-col">
+      <div class="card" style="border-color:var(--teal);background:var(--teal-bg);">
+        <h3 style="color:var(--teal);">🚀 AI-Rising (value premium)</h3>
+        <ul>
+          <li><strong>AI-Assisted Development</strong> — directing and reviewing AI tools is the new senior skill</li>
+          <li><strong>Security Engineering</strong> — adversarial creativity can't be automated</li>
+          <li><strong>System Design</strong> — tradeoffs require human context and accountability</li>
+          <li><strong>Product Thinking</strong> — understanding user problems is irreducibly human</li>
+          <li><strong>Technical Leadership</strong> — culture, hiring, and direction are still people skills</li>
+          <li><strong>Code Review &amp; Mentorship</strong> — reviewing AI-generated code raises the bar here</li>
+        </ul>
+      </div>
+      <div class="card" style="border-color:var(--coral);background:var(--coral-bg);">
+        <h3 style="color:var(--coral);">📉 AI-Declining (commoditising)</h3>
+        <ul>
+          <li><strong>Algorithms &amp; DSA</strong> — LeetCode is effectively solved by frontier models</li>
+          <li><strong>Language Proficiency</strong> — syntax and boilerplate are code-gen territory</li>
+          <li><strong>Boilerplate API Design</strong> — CRUD scaffolding now auto-generated</li>
+          <li><strong>Basic Testing</strong> — unit test generation is reliable in 2026</li>
+          <li><strong>Documentation</strong> — first drafts are AI's job now</li>
+          <li><strong>Repetitive DevOps config</strong> — pipeline YAML and Terraform modules are templates</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>The meta-skill:</strong> Engineers who can tell the difference between <em>AI-sufficient</em> and
+      <em>AI-insufficient</em> work — and allocate their attention accordingly — will have a compounding
+      advantage over those who compete with AI on AI's own turf.
+    </div>
+  </div>
+
+  <!-- SECTION 4: EMERGING SKILLS -->
+  <div class="section">
+    <div class="section-title">Section 04</div>
+    <h2>5 Emerging Skills — Not in Job Descriptions Yet</h2>
+    <p class="lead">
+      These were surfaced consistently by 3+ models as skills that barely appear in 2026 JDs
+      but will be table stakes by 2028.
+    </p>
+
+    <div class="arch-col">
+      <div class="arch-card">
+        <div class="arch-label" style="color:var(--teal);">01 · AI Agent Engineering</div>
+        <p style="font-size:13px;color:var(--muted);">
+          Designing, orchestrating, and debugging multi-agent workflows. Tool-calling, memory management,
+          evaluation loops. Today's power user skill; 2027's expected mid-level competency.
+        </p>
+      </div>
+      <div class="arch-card">
+        <div class="arch-label" style="color:var(--purple);">02 · Eval-Driven Development</div>
+        <p style="font-size:13px;color:var(--muted);">
+          Writing evaluations to measure AI system quality instead of writing unit tests for deterministic
+          code. The TDD of the AI era. New discipline, almost no training resources yet.
+        </p>
+      </div>
+      <div class="arch-card">
+        <div class="arch-label" style="color:var(--coral);">03 · Secure AI Systems</div>
+        <p style="font-size:13px;color:var(--muted);">
+          Prompt injection defence, model output validation, AI system threat-modelling.
+          Where AppSec meets ML — one of the fastest-growing disciplines in 2025–26.
+        </p>
+      </div>
+      <div class="arch-card">
+        <div class="arch-label" style="color:var(--amber);">04 · FinOps / Cost Engineering</div>
+        <p style="font-size:13px;color:var(--muted);">
+          GPU/inference cost allocation, cloud spend governance, token budgeting for LLM calls.
+          As AI inference bills dwarf server bills, this becomes a first-class engineering concern.
+        </p>
+      </div>
+      <div class="arch-card" style="grid-column: span 2;">
+        <div class="arch-label" style="color:var(--teal);">05 · Codebase Design for AI Agents</div>
+        <p style="font-size:13px;color:var(--muted);">
+          Structuring codebases, docs, and tests so AI agents can navigate and modify them reliably.
+          Code that is "agent-legible" — clear naming, AGENTS.md files, modular boundaries —
+          becomes a quality standard alongside readability and performance.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: ROLE DISRUPTION RISK -->
+  <div class="section">
+    <div class="section-title">Section 05</div>
+    <h2>Role Disruption Risk</h2>
+    <p class="lead">
+      Which roles see the most compression vs. which see compounding returns?
+      All 4 models converged on these classifications.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Risk Level</th>
+            <th>Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="skill-name">React / Vue Frontend Developer</td>
+            <td><span class="disruption-high">HIGH</span></td>
+            <td style="font-size:13px;color:var(--muted);">Component boilerplate, styling, and routing are heavily AI-generated; value shifts to system design and product judgment</td>
+          </tr>
+          <tr>
+            <td class="skill-name">DBA / Database Engineer</td>
+            <td><span class="disruption-high">HIGH</span></td>
+            <td style="font-size:13px;color:var(--muted);">Schema design, query optimisation, and migrations increasingly AI-assisted; standalone DBA role shrinking</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Junior Frontend Engineer</td>
+            <td><span class="disruption-high">HIGH</span></td>
+            <td style="font-size:13px;color:var(--muted);">Entry-level code-writing tasks are the first to be absorbed by AI coding tools</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Fullstack Product Engineer</td>
+            <td><span class="disruption-med">MEDIUM</span></td>
+            <td style="font-size:13px;color:var(--muted);">AI amplifies individual productivity — one engineer does what three did, but the role remains</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Backend / API Engineer</td>
+            <td><span class="disruption-med">MEDIUM</span></td>
+            <td style="font-size:13px;color:var(--muted);">Service architecture and security require human judgment; pure CRUD implementation commoditises</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Security Engineer</td>
+            <td><span class="disruption-low">LOW</span></td>
+            <td style="font-size:13px;color:var(--muted);">Adversarial creativity, threat modelling, and system-level security require deep human intuition</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Software Architect</td>
+            <td><span class="disruption-low">LOW</span></td>
+            <td style="font-size:13px;color:var(--muted);">System tradeoffs, org context, and long-term thinking are irreducibly human; AI is a design tool not a designer</td>
+          </tr>
+          <tr>
+            <td class="skill-name">SRE / Platform Engineer</td>
+            <td><span class="disruption-low">LOW</span></td>
+            <td style="font-size:13px;color:var(--muted);">Reliability engineering, incident response, and cross-service observability need human judgment at 3am</td>
+          </tr>
+          <tr>
+            <td class="skill-name">Engineering Manager</td>
+            <td><span class="disruption-low">LOW</span></td>
+            <td style="font-size:13px;color:var(--muted);">People, culture, hiring, and strategic direction are durable human concerns</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- MODEL QUOTES -->
+  <div class="section">
+    <div class="section-title">What the Models Said</div>
+    <h2>Notable Quotes from the Research Session</h2>
+
+    <div class="quote">
+      "The engineer of 2027 is a systems thinker who uses AI as a force multiplier — not a typist who avoids it.
+      The biggest gap we see is that most engineers are still optimising for writing code rather than
+      <em>directing systems</em>."
+      <cite>— GPT-5.3, in response to the 2027 skills research prompt</cite>
+    </div>
+
+    <div class="quote">
+      "I scored algorithms at 1–2 deliberately. The question isn't whether algorithms matter — they do.
+      The question is whether a human writing them by hand is the competitive advantage.
+      In 2027, it isn't. Knowing <em>which</em> algorithm to apply is. Coding it is not."
+      <cite>— Grok 4 (xAI), elaborating on the AI-discount methodology</cite>
+    </div>
+
+    <div class="quote">
+      "Security scored highest because it's adversarially creative. An attacker doesn't follow a rubric.
+      A model trained on known attack patterns will lag behind novel attack surfaces.
+      Human security engineers are the immune system of the system — and immune systems need to be
+      creative, not just well-trained."
+      <cite>— Gemini 3.1 Pro, on why Security Engineering scored 4–5 across all archetypes</cite>
+    </div>
+
+    <div class="quote">
+      "Product Thinking scored 5 for Frontend and Architecture archetypes because the most valuable thing
+      a software engineer can do in an AI-augmented world is understand the problem deeply enough to know
+      what <em>not</em> to build. AI will happily build the wrong thing very fast."
+      <cite>— Claude Opus 4.7, on the premium placed on Product Thinking</cite>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="border-top: 1px solid var(--rule); padding-top: 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+    <span style="font-size:11px;color:var(--muted);letter-spacing:0.1em;">SKILL NAVIGATOR · EST. 2026 · v2.5 SW</span>
+    <a href="/" style="font-size:12px;color:var(--teal);text-decoration:none;font-weight:500;">← Back to your skill map</a>
+  </div>
+
+</div>
+</body>
+</html>

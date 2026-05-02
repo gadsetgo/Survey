@@ -1,8 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { useSurveyStore } from '@/lib/store'
-import type { SkillKey, Skills, SurveyState, ApiResponse } from '@/lib/types'
+import { useSoftwareSurveyStore } from '@/lib/software-store'
+import { buildSoftwareAIPrompt, SKILL_LABELS as SW_LABELS } from '@/lib/software-fallback'
+import type { SoftwareSkillKey, SoftwareSkills } from '@/lib/software-types'
 import FeedbackBar from '@/components/FeedbackBar'
 
 interface Props {
@@ -14,43 +15,43 @@ const mkT = (dark: boolean) => dark
   ? { bg: '#1a1410', fg: '#fdf8f0', muted: 'rgba(253,248,240,0.55)', rule: 'rgba(253,248,240,0.14)', surface: '#221a14' }
   : { bg: '#fdf8f0', fg: '#1a1410', muted: 'rgba(26,20,16,0.55)',    rule: 'rgba(26,20,16,0.14)',    surface: '#f6efe2'  }
 
-// 16 skill labels for spider axes
-const SKILL_LABELS: Record<SkillKey, string> = {
-  pipelines: 'Pipelines', sql: 'SQL', python: 'Python', cloud: 'Cloud',
-  ai_tools: 'AI/LLM', modeling: 'Modeling',
-  governance: 'Govern.', dq: 'Quality', metadata: 'Metadata',
-  bi_delivery: 'BI', compliance: 'Compliance', domain: 'Domain',
-  stakeholders: 'Stake.', framing: 'Framing', storytelling: 'Story.', strategic: 'Strategic',
+const SKILL_LABELS: Record<SoftwareSkillKey, string> = {
+  languages:       'Lang',      system_design:   'Sys',    cloud_infra:     'Cloud',
+  ai_coding:       'AI Dev',    testing:         'Test',   security:        'Sec',
+  algorithms:      'Algo',      databases:        'DB',     devops_ci:       'DevOps',
+  api_design:      'APIs',      performance:     'Perf',   architecture:    'Arch',
+  code_review:     'Review',    product_thinking:'Prod',   communication:   'Comms',
+  leadership:      'Lead',
 }
 
-const SKILL_KEYS = Object.keys(SKILL_LABELS) as SkillKey[]
+const SKILL_KEYS = Object.keys(SKILL_LABELS) as SoftwareSkillKey[]
 
-const CATEGORY_COLORS: Record<SkillKey, string> = {
-  pipelines: '#1d7a6b', sql: '#1d7a6b', python: '#1d7a6b', cloud: '#1d7a6b', ai_tools: '#1d7a6b', modeling: '#1d7a6b',
-  governance: '#e88c2a', dq: '#e88c2a', metadata: '#e88c2a', bi_delivery: '#e88c2a', compliance: '#e88c2a', domain: '#e88c2a',
-  stakeholders: '#5c4db1', framing: '#5c4db1', storytelling: '#5c4db1', strategic: '#5c4db1',
+const CATEGORY_COLORS: Record<SoftwareSkillKey, string> = {
+  // TC group — teal
+  languages: '#1d7a6b', system_design: '#1d7a6b', cloud_infra: '#1d7a6b',
+  ai_coding: '#1d7a6b', testing: '#1d7a6b', security: '#1d7a6b',
+  // DO group — orange
+  algorithms: '#e88c2a', databases: '#e88c2a', devops_ci: '#e88c2a',
+  api_design: '#e88c2a', performance: '#e88c2a', architecture: '#e88c2a',
+  // SL group — purple
+  code_review: '#5c4db1', product_thinking: '#5c4db1', communication: '#5c4db1', leadership: '#5c4db1',
 }
 
 const DEST_STYLE: Record<string, { label: string; color: string; bg: string }> = {
-  best_fit:     { label: 'BEST FIT',     color: '#3d6b4f', bg: '#e4f0e8' },
-  stretch:      { label: 'STRETCH',      color: '#2563eb', bg: '#eff6ff' },
-  long_horizon: { label: '2–3 YR',       color: '#e88c2a', bg: '#fdf0d5' },
+  best_fit:     { label: 'BEST FIT', color: '#3d6b4f', bg: '#e4f0e8' },
+  stretch:      { label: 'STRETCH',  color: '#2563eb', bg: '#eff6ff' },
+  long_horizon: { label: '2–3 YR',   color: '#e88c2a', bg: '#fdf0d5' },
 }
 
 
-export default function Results({ dark = false, onRestart }: Props) {
+export default function SoftwareResults({ dark = false, onRestart }: Props) {
   const T = mkT(dark)
-  const store = useSurveyStore()
+  const store = useSoftwareSurveyStore()
   const results = store.results!
   const userCats = store.selectedCategories
-  const [skills, setSkills] = useState<Skills>({ ...store.skills })
+  const [skills] = useState<SoftwareSkills>({ ...store.skills })
   const [showPrompt, setShowPrompt] = useState(false)
-  const aiPrompt = showPrompt ? buildAIPrompt(store, results) : ''
 
-  const handleSkill = (key: SkillKey, val: number) =>
-    setSkills((prev) => ({ ...prev, [key]: val }))
-
-  // Top 3 urgent gaps
   const gaps = SKILL_KEYS
     .map((k) => ({ key: k, delta: results.demand_levels[k] - skills[k] }))
     .sort((a, b) => b.delta - a.delta)
@@ -61,45 +62,35 @@ export default function Results({ dark = false, onRestart }: Props) {
   const atRisk   = Object.values(results.gap_analysis).filter((v) => v === 'at_risk').length
   const aligned  = Object.values(results.gap_analysis).filter((v) => v === 'aligned').length
 
-  const profileParts = [
-    store.selectedRoles[0],
-    store.skillShape ? { i: 'I-shape', t: 'T-shape', comb: 'Comb-shape', gen: 'Generalist' }[store.skillShape] : null,
-    store.seniority,
-    store.yearsExperience ? `${store.yearsExperience} yrs` : null,
-    store.industry,
-  ].filter(Boolean) as string[]
+  const aiPrompt = showPrompt ? buildSoftwareAIPrompt(store, results) : ''
 
   return (
     <div style={{ background: T.bg, color: T.fg, minHeight: '100vh', fontFamily: "'DM Sans', sans-serif" }}>
       <div style={{ maxWidth: 480, margin: '0 auto', padding: '0 24px' }}>
 
-        {/* Nav */}
         <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 0 14px' }}>
           <button onClick={onRestart} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 24, color: T.fg, padding: 0, lineHeight: 1 }}>←</button>
-          <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', color: T.muted }}>YOUR MAP · 04 / 04</span>
+          <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', color: T.muted }}>YOUR MAP · SW TRACK</span>
           <button
-            onClick={() => window.print()}
             className="no-print"
-            style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', padding: '6px 10px', border: `1px solid ${T.rule}`, borderRadius: 999, background: 'transparent', color: T.fg, cursor: 'pointer' }}>
+            onClick={() => window.print()}
+            style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', padding: '6px 10px', border: `1px solid ${T.rule}`, borderRadius: 999, background: 'transparent', color: T.fg, cursor: 'pointer' }}
+          >
             PRINT ↗
           </button>
         </header>
 
-        {/* Hero */}
         <div style={{ marginBottom: 24 }}>
           <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.18em', color: T.muted, marginBottom: 14 }}>
-            YOUR PROFILE · {profileParts.join(' · ')}
+            YOUR PROFILE · {store.selectedRoles[0] ?? 'Software Engineer'} · {store.seniority ?? ''}
           </div>
-          <h1 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 56, lineHeight: 0.9, letterSpacing: '-0.04em', margin: '0 0 14px' }}>
-            You&apos;re a<br />
-            <em style={{ fontStyle: 'italic', color: '#d95f3b' }}>
-              {store.skillShape === 'comb' ? 'comb-shape.' : store.skillShape === 'i' ? 'specialist.' : store.skillShape === 't' ? 'T-shape.' : 'generalist.'}
-            </em>
+          <h1 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 48, lineHeight: 0.9, letterSpacing: '-0.04em', margin: '0 0 14px' }}>
+            Your 2027<br /><em style={{ fontStyle: 'italic', color: '#1d7a6b' }}>software</em><br />skill map.
           </h1>
           <p style={{ fontSize: 14, lineHeight: 1.5, color: T.muted, margin: 0 }}>
             {gapCount > 0
-              ? `${gapCount} urgent gap${gapCount > 1 ? 's' : ''} to close before 2027. ${aligned} skill${aligned !== 1 ? 's' : ''} already aligned.`
-              : `Strong alignment overall. ${aligned} skill${aligned !== 1 ? 's' : ''} match 2027 demand.`}
+              ? `${gapCount} urgent gap${gapCount > 1 ? 's' : ''} to close. ${aligned} skill${aligned !== 1 ? 's' : ''} already aligned with 2027 demand.`
+              : `Strong alignment overall. ${aligned} skills match 2027 demand.`}
           </p>
         </div>
 
@@ -118,23 +109,21 @@ export default function Results({ dark = false, onRestart }: Props) {
 
         {/* Gap metrics */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginBottom: 28 }}>
-          <MetricPill icon="✅" count={aligned}  label="ALIGNED"   color="#3d6b4f" bg="#e4f0e8" />
-          <MetricPill icon="🔴" count={gapCount} label="URGENT"    color="#d95f3b" bg="#fdeee9" />
-          <MetricPill icon="🟡" count={atRisk}   label="AT RISK"   color="#e88c2a" bg="#fdf0d5" />
+          <MetricPill icon="✅" count={aligned}  label="ALIGNED" color="#3d6b4f" bg="#e4f0e8" />
+          <MetricPill icon="🔴" count={gapCount} label="URGENT"  color="#d95f3b" bg="#fdeee9" />
+          <MetricPill icon="🟡" count={atRisk}   label="AT RISK" color="#e88c2a" bg="#fdf0d5" />
         </div>
 
-        {/* Section 01 — Biggest gaps */}
+        {/* Biggest gaps */}
         {gaps.length > 0 && (
           <div style={{ marginBottom: 28 }}>
             <SectionHeader num="01" label="BIGGEST GAPS" T={T} />
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {gaps.map((g, i) => (
                 <div key={g.key} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <span style={{ fontFamily: "'DM Sans'", fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', color: T.muted, width: 18 }}>
-                    0{i + 1}
-                  </span>
+                  <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', color: T.muted, width: 18 }}>0{i + 1}</span>
                   <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
-                    <span style={{ fontSize: 13, fontWeight: 500, color: T.fg }}>{SKILL_LABELS[g.key]}</span>
+                    <span style={{ fontSize: 13, fontWeight: 500, color: T.fg }}>{SW_LABELS[g.key]}</span>
                     <div style={{ height: 8, borderRadius: 4, background: T.rule, position: 'relative', overflow: 'hidden' }}>
                       <div style={{ position: 'absolute', inset: '0 auto 0 0', width: `${results.demand_levels[g.key] * 20}%`, height: '100%', background: '#e88c2a', opacity: 0.35 }} />
                       <div style={{ position: 'absolute', inset: '0 auto 0 0', width: `${skills[g.key] * 20}%`, height: '100%', background: CATEGORY_COLORS[g.key] }} />
@@ -149,12 +138,9 @@ export default function Results({ dark = false, onRestart }: Props) {
           </div>
         )}
 
-        {/* Section 02 — Role destinations */}
+        {/* Role destinations */}
         <div style={{ marginBottom: 28 }}>
           <SectionHeader num="02" label="ROLE DESTINATIONS" T={T} />
-          <div style={{ fontSize: 11, fontWeight: 500, letterSpacing: '0.04em', color: T.muted, marginBottom: 10 }}>
-            Hybrid futures — roles your shape opens up
-          </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {results.role_destinations.map((dest) => {
               const style = DEST_STYLE[dest.type] || DEST_STYLE.best_fit
@@ -162,9 +148,7 @@ export default function Results({ dark = false, onRestart }: Props) {
                 <div key={dest.type} style={{ padding: '14px 16px', border: `1px solid ${T.rule}`, borderRadius: 8 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 16, letterSpacing: '-0.02em', color: T.fg }}>
-                        {dest.title}
-                      </div>
+                      <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 16, letterSpacing: '-0.02em', color: T.fg }}>{dest.title}</div>
                       <div style={{ fontSize: 11, color: T.muted, marginTop: 2 }}>{dest.rationale}</div>
                     </div>
                     <span style={{ fontSize: 9, fontWeight: 600, letterSpacing: '0.12em', padding: '3px 8px', borderRadius: 999, background: style.bg, color: style.color, flexShrink: 0, marginLeft: 10 }}>
@@ -177,19 +161,15 @@ export default function Results({ dark = false, onRestart }: Props) {
           </div>
         </div>
 
-        {/* Section 03 — Resources from roadmap */}
+        {/* Resources */}
         <div style={{ marginBottom: 28 }}>
           <SectionHeader num="03" label="SUGGESTED RESOURCES" T={T} />
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {results.roadmap.quick_wins.slice(0, 3).map((step, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px', border: `1px solid ${T.rule}`, borderRadius: 8 }}>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 9, fontWeight: 600, letterSpacing: '0.14em', color: T.muted, marginBottom: 2 }}>
-                    {step.resources[0] ? 'RESOURCE' : 'QUICK WIN'}
-                  </div>
-                  <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: '-0.01em', color: T.fg }}>
-                    {step.title}
-                  </div>
+                  <div style={{ fontSize: 9, fontWeight: 600, letterSpacing: '0.14em', color: T.muted, marginBottom: 2 }}>QUICK WIN</div>
+                  <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: '-0.01em', color: T.fg }}>{step.title}</div>
                 </div>
                 <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 18, color: T.fg }}>↗</span>
               </div>
@@ -197,8 +177,21 @@ export default function Results({ dark = false, onRestart }: Props) {
           </div>
         </div>
 
+        {/* Skills to protect */}
+        {results.skills_to_protect.length > 0 && (
+          <div style={{ borderTop: `1px solid ${T.rule}`, paddingTop: 24, marginBottom: 32 }}>
+            <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.18em', color: T.muted, marginBottom: 8 }}>DON&apos;T NEGLECT THESE</div>
+            <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14, color: T.fg, marginBottom: 12 }}>Your competitive foundation</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {results.skills_to_protect.map((sk) => (
+                <span key={sk} style={{ fontSize: 12, fontWeight: 500, padding: '6px 12px', borderRadius: 999, background: '#e4f0e8', color: '#3d6b4f' }}>{sk}</span>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* AI Roadmap block */}
-        <div className="no-print" style={{ background: '#5c4db1', borderRadius: 12, padding: '20px', marginBottom: 24, color: '#fdf8f0' }}>
+        <div className="no-print" style={{ background: '#1d7a6b', borderRadius: 12, padding: '20px', marginBottom: 24, color: '#fdf8f0' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
             <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.18em' }}>AI ROADMAP</span>
             <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.18em' }}>NEW</span>
@@ -225,31 +218,32 @@ export default function Results({ dark = false, onRestart }: Props) {
           {showPrompt && (
             <div style={{ marginTop: 16 }}>
               <pre style={{
-                whiteSpace: 'pre-wrap', wordBreak: 'break-word', fontSize: 12, lineHeight: 1.6,
-                background: 'rgba(253,248,240,0.10)', borderRadius: 8, padding: '14px 16px',
-                color: '#fdf8f0', margin: '0 0 12px', maxHeight: 320, overflowY: 'auto',
-                fontFamily: "'DM Sans', sans-serif",
-              }}>{aiPrompt}</pre>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                whiteSpace: 'pre-wrap', wordBreak: 'break-word', fontFamily: "'DM Sans', sans-serif",
+                fontSize: 12, lineHeight: 1.5, color: '#fdf8f0', background: 'rgba(0,0,0,0.25)',
+                padding: '14px', borderRadius: 8, marginBottom: 12, maxHeight: 280, overflowY: 'auto',
+              }}>
+                {aiPrompt}
+              </pre>
+              <div style={{ display: 'flex', gap: 8 }}>
                 <button
                   onClick={() => navigator.clipboard?.writeText(aiPrompt)}
                   style={{
-                    padding: '12px', border: '1px solid rgba(253,248,240,0.3)', borderRadius: 8,
+                    flex: 1, padding: '12px', border: '1px solid rgba(253,248,240,0.3)', borderRadius: 8,
                     background: 'transparent', color: '#fdf8f0', cursor: 'pointer',
-                    fontSize: 13, fontWeight: 500, fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 500,
                   }}
                 >
-                  Copy prompt
+                  Copy prompt ↗
                 </button>
                 <button
                   onClick={() => window.print()}
                   style={{
-                    padding: '12px', border: 'none', borderRadius: 8,
-                    background: '#fdf8f0', color: '#1a1410', cursor: 'pointer',
-                    fontSize: 13, fontWeight: 500, fontFamily: "'DM Sans', sans-serif",
+                    flex: 1, padding: '12px', border: '1px solid rgba(253,248,240,0.3)', borderRadius: 8,
+                    background: 'transparent', color: '#fdf8f0', cursor: 'pointer',
+                    fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 500,
                   }}
                 >
-                  Print results
+                  Print results ↗
                 </button>
               </div>
             </div>
@@ -257,7 +251,7 @@ export default function Results({ dark = false, onRestart }: Props) {
         </div>
 
         {/* Action row */}
-        <div className="no-print" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 32 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 32 }} className="no-print">
           <button
             onClick={onRestart}
             style={{
@@ -276,97 +270,64 @@ export default function Results({ dark = false, onRestart }: Props) {
               padding: '16px', borderRadius: 8, cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
               fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 500,
-              background: 'transparent', color: T.fg,
-              border: `1px solid ${T.rule}`,
+              background: 'transparent', color: T.fg, border: `1px solid ${T.rule}`,
             }}
           >
-            <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 16 }}>⎙</span>
+            <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 16 }}>🖨</span>
             <span>Print results</span>
           </button>
         </div>
 
-        {/* Skills to protect */}
-        {results.skills_to_protect.length > 0 && (
-          <div style={{ borderTop: `1px solid ${T.rule}`, paddingTop: 24, marginBottom: 32 }}>
-            <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.18em', color: T.muted, marginBottom: 8 }}>DON&apos;T NEGLECT THESE</div>
-            <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14, color: T.fg, marginBottom: 12 }}>
-              Your competitive foundation
-            </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-              {results.skills_to_protect.map((sk) => (
-                <span key={sk} style={{
-                  fontSize: 12, fontWeight: 500, padding: '6px 12px', borderRadius: 999,
-                  background: '#e4f0e8', color: '#3d6b4f',
-                }}>
-                  {sk}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
+        <FeedbackBar dark={dark} surveyType="software" />
 
-        <FeedbackBar dark={dark} surveyType="data" />
+        <div style={{ borderTop: `1px solid ${T.rule}`, paddingTop: 20, marginBottom: 32 }}>
+          <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.18em', color: T.muted, marginBottom: 8 }}>METHODOLOGY</div>
+          <a
+            href="/software-research-report.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ fontSize: 12, color: T.muted, textDecoration: 'none', borderBottom: `1px solid ${T.rule}` }}
+          >
+            How we calculated your 2027 demand scores →
+          </a>
+        </div>
 
-        {/* Footer */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, paddingBottom: 8, fontSize: 10, fontWeight: 500, letterSpacing: '0.16em', color: T.muted }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, paddingBottom: 32, fontSize: 10, fontWeight: 500, letterSpacing: '0.16em', color: T.muted }}>
           <span>EST. 2026</span>
           <span style={{ flex: 1, height: 1, background: T.rule }} />
-          <span>v2.4</span>
-        </div>
-        <div style={{ paddingBottom: 32, textAlign: 'center' }}>
-          <a
-            href="/research-report.html"
-            target="_blank"
-            rel="noreferrer"
-            style={{ fontSize: 11, fontWeight: 500, color: T.muted, textDecoration: 'underline', letterSpacing: '0.06em' }}
-          >
-            How we calculated your demand scores →
-          </a>
+          <span>v2.5 SW</span>
         </div>
       </div>
     </div>
   )
 }
 
-// ── Spider chart (SVG, 16 axes) ──────────────────────────────────────────────
-function SpiderChart({ current, demand, T }: { current: Skills; demand: Skills; T: ReturnType<typeof mkT> }) {
+function SpiderChart({ current, demand, T }: { current: SoftwareSkills; demand: SoftwareSkills; T: ReturnType<typeof mkT> }) {
   const cx = 160, cy = 160, R = 120, N = 16
   const angles = Array.from({ length: N }, (_, i) => (Math.PI * 2 * i) / N - Math.PI / 2)
   const pt = (i: number, v: number): [number, number] => [cx + Math.cos(angles[i]) * R * v, cy + Math.sin(angles[i]) * R * v]
   const polyOf = (vals: number[]) => vals.map((v, i) => pt(i, v).join(',')).join(' ')
-
   const curVals = SKILL_KEYS.map((k) => current[k] / 5)
   const demVals = SKILL_KEYS.map((k) => demand[k] / 5)
-
   return (
     <svg viewBox="0 0 320 320" width="100%" style={{ display: 'block' }}>
-      {/* Rings */}
       {[0.25, 0.5, 0.75, 1].map((r, ri) => (
-        <polygon key={ri}
-          points={Array.from({ length: N }, (_, k) => pt(k, r).join(',')).join(' ')}
-          fill="none" stroke={T.rule} strokeWidth="1" />
+        <polygon key={ri} points={Array.from({ length: N }, (_, k) => pt(k, r).join(',')).join(' ')} fill="none" stroke={T.rule} strokeWidth="1" />
       ))}
-      {/* Spokes */}
       {SKILL_KEYS.map((k, i) => {
         const [x, y] = pt(i, 1)
         return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke={CATEGORY_COLORS[k]} strokeOpacity="0.25" strokeWidth="1" />
       })}
-      {/* 2027 demand (dashed amber) */}
       <polygon points={polyOf(demVals)} fill="rgba(232,140,42,0.10)" stroke="#e88c2a" strokeWidth="1.5" strokeDasharray="4 4" />
-      {/* Current (teal) */}
       <polygon points={polyOf(curVals)} fill="rgba(29,122,107,0.22)" stroke="#1d7a6b" strokeWidth="2" />
-      {/* Dots */}
       {curVals.map((v, i) => {
         const [x, y] = pt(i, v)
         return <circle key={i} cx={x} cy={y} r="3.5" fill="#1d7a6b" stroke={T.surface} strokeWidth="1.5" />
       })}
-      {/* Labels */}
       {SKILL_KEYS.map((k, i) => {
         const [x, y] = pt(i, 1.22)
         return (
-          <text key={i} x={x} y={y + 3} textAnchor="middle"
-            fontFamily="'DM Sans'" fontSize="9" fontWeight="600" letterSpacing="0.5"
-            fill={CATEGORY_COLORS[k]}>
+          <text key={i} x={x} y={y + 3} textAnchor="middle" fontFamily="'DM Sans'" fontSize="9" fontWeight="600" letterSpacing="0.5" fill={CATEGORY_COLORS[k]}>
             {SKILL_LABELS[k].toUpperCase()}
           </text>
         )
@@ -402,24 +363,4 @@ function SectionHeader({ num, label, T }: { num: string; label: string; T: Retur
       <span style={{ flex: 1, height: 1, background: T.rule }} />
     </div>
   )
-}
-
-function buildAIPrompt(store: SurveyState, results: ApiResponse): string {
-  const topGaps = Object.entries(results.gap_analysis)
-    .filter(([, v]) => v === 'urgent_gap')
-    .map(([k]) => k)
-    .join(', ')
-
-  return `I am a ${store.selectedRoles.join(', ')} with ${store.yearsExperience} years of experience, ${store.seniority} level, ${store.skillShape}-shaped profile.
-
-My top skill gaps against 2027 demand are: ${topGaps || 'none identified'}.
-Skills to protect: ${results.skills_to_protect.join(', ')}.
-Target role destinations: ${results.role_destinations.map((d) => d.title).join(', ')}.
-
-Please build me a detailed 12-month learning roadmap structured around:
-- Quick wins (first 90 days): specific courses, projects, or credentials
-- Core skill builds (months 3–6): depth work on my biggest gaps
-- Role transition enablers (months 6–12): what gets me to my stretch destination
-
-Format as a week-by-week or month-by-month plan with concrete resources (courses, books, communities). Be specific about time investment per week.`
 }

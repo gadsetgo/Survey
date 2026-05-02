@@ -1,0 +1,27 @@
+{
+  "_meta": {
+    "version": "2026-05-03",
+    "models": ["Grok 4 by xAI", "GPT-5.3", "Gemini 3.1 Pro", "Claude Opus 4.7"],
+    "method": "4-model consensus average, rounded to nearest integer, with AI discount applied"
+  },
+  "DE": {
+    "pipelines": 4, "sql": 3, "python": 3, "cloud": 5, "ai_tools": 5, "modeling": 4,
+    "governance": 3, "dq": 4, "metadata": 3, "bi_delivery": 2, "compliance": 3, "domain": 3,
+    "stakeholders": 3, "framing": 3, "storytelling": 2, "strategic": 3
+  },
+  "AN": {
+    "pipelines": 2, "sql": 4, "python": 2, "cloud": 4, "ai_tools": 5, "modeling": 4,
+    "governance": 2, "dq": 3, "metadata": 3, "bi_delivery": 4, "compliance": 2, "domain": 5,
+    "stakeholders": 5, "framing": 5, "storytelling": 5, "strategic": 4
+  },
+  "DS": {
+    "pipelines": 3, "sql": 3, "python": 4, "cloud": 4, "ai_tools": 5, "modeling": 4,
+    "governance": 3, "dq": 3, "metadata": 2, "bi_delivery": 2, "compliance": 2, "domain": 4,
+    "stakeholders": 4, "framing": 5, "storytelling": 4, "strategic": 4
+  },
+  "GV": {
+    "pipelines": 2, "sql": 2, "python": 2, "cloud": 3, "ai_tools": 3, "modeling": 3,
+    "governance": 5, "dq": 5, "metadata": 5, "bi_delivery": 2, "compliance": 5, "domain": 4,
+    "stakeholders": 5, "framing": 4, "storytelling": 4, "strategic": 5
+  }
+}

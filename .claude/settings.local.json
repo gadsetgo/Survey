@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir C:\\\\Users\\\\sidbh\\\\Proj\\\\SkillNavigator\\\\app *)",
+      "Bash(npx tsc *)",
+      "Bash(git fetch *)",
+      "Bash(git log *)",
+      "Bash(git stash *)",
+      "Bash(git pull *)",
+      "mcp__claude_ai_Supabase__list_projects",
+      "mcp__claude_ai_Supabase__get_project_url",
+      "mcp__claude_ai_Supabase__get_publishable_keys",
+      "mcp__claude_ai_Supabase__apply_migration",
+      "Bash(npm install *)",
+      "mcp__claude_ai_Vercel__list_teams",
+      "mcp__claude_ai_Vercel__list_projects",
+      "mcp__claude_ai_Vercel__get_project"
+    ]
+  }
+}

@@ -3,6 +3,7 @@
 interface Props {
   dark?: boolean
   onStart: () => void
+  onStartSoftware: () => void
   onToggleDark: () => void
 }
 
@@ -17,7 +18,7 @@ const dark_ = {
   amber: '#e88c2a', coral: '#d95f3b',
 }
 
-export default function Landing({ dark = false, onStart, onToggleDark }: Props) {
+export default function Landing({ dark = false, onStart, onStartSoftware, onToggleDark }: Props) {
   const T = dark ? dark_ : light
 
   return (
@@ -91,24 +92,44 @@ export default function Landing({ dark = false, onStart, onToggleDark }: Props) 
         </p>
 
         {/* CTA block */}
-        <div style={{ background: T.coral, borderRadius: 8, padding: '14px', marginBottom: 28 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 8px 14px', color: '#fdf8f0' }}>
+        <div style={{ marginBottom: 28 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10, fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', color: T.muted }}>
             {['12 MIN', 'FREE', 'NO SIGN-UP'].map((s) => (
-              <span key={s} style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.16em' }}>{s}</span>
+              <span key={s}>{s}</span>
             ))}
           </div>
-          <button
-            onClick={onStart}
-            style={{
-              width: '100%', padding: '18px 22px', border: 'none', borderRadius: 999,
-              cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-              fontSize: 16, fontWeight: 500, fontFamily: "'DM Sans', sans-serif",
-              background: T.bg, color: T.fg,
-            }}
-          >
-            Start your map
-            <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 22, fontWeight: 700 }}>→</span>
-          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <button
+              onClick={onStart}
+              style={{
+                width: '100%', padding: '18px 22px', border: 'none', borderRadius: 999,
+                cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                fontSize: 15, fontWeight: 500, fontFamily: "'DM Sans', sans-serif",
+                background: T.coral, color: '#fdf8f0',
+              }}
+            >
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 2 }}>
+                <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', opacity: 0.8 }}>DATA & ANALYTICS</span>
+                <span>Start your data map</span>
+              </div>
+              <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 22, fontWeight: 700 }}>→</span>
+            </button>
+            <button
+              onClick={onStartSoftware}
+              style={{
+                width: '100%', padding: '18px 22px', border: `1.5px solid ${T.rule}`, borderRadius: 999,
+                cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                fontSize: 15, fontWeight: 500, fontFamily: "'DM Sans', sans-serif",
+                background: 'transparent', color: T.fg,
+              }}
+            >
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 2 }}>
+                <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', color: T.muted }}>SOFTWARE ENGINEERING</span>
+                <span>Start your software map</span>
+              </div>
+              <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 22, fontWeight: 700 }}>→</span>
+            </button>
+          </div>
         </div>
 
         {/* Trust block */}

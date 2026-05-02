@@ -12,6 +12,7 @@ export default function ScreenTransition({ screenKey, children }: Props) {
 
   useEffect(() => {
     setVisible(false)
+    window.scrollTo({ top: 0, behavior: 'instant' })
     const t = setTimeout(() => setVisible(true), 20)
     return () => clearTimeout(t)
   }, [screenKey])

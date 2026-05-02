@@ -21,6 +21,7 @@ const CATEGORIES = [
       { id: 'data-architect',     label: 'Data Architect' },
       { id: 'dataops',            label: 'DataOps Engineer' },
       { id: 'cloud-data',         label: 'Cloud Data Engineer' },
+      { id: 'platform-admin',     label: 'Data Platform Admin' },
     ],
   },
   {

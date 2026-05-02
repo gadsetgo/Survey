@@ -1,0 +1,37 @@
+{
+  "_meta": {
+    "version": "2026-05-03",
+    "models": ["Grok 4 by xAI", "GPT-5.3", "Gemini 3.1 Pro", "Claude Opus 4.7"],
+    "method": "4-model consensus average, rounded to nearest integer, with AI discount applied",
+    "categories": {
+      "FE": "Frontend / UI Engineering",
+      "BE": "Backend / API Engineering",
+      "PE": "Platform / DevOps / SRE",
+      "AR": "Architecture & Tech Leadership"
+    }
+  },
+  "FE": {
+    "languages": 3, "system_design": 3, "cloud_infra": 3, "ai_coding": 5,
+    "testing": 3, "security": 4, "algorithms": 1, "databases": 2,
+    "devops_ci": 3, "api_design": 3, "performance": 4, "architecture": 3,
+    "code_review": 4, "product_thinking": 5, "communication": 4, "leadership": 3
+  },
+  "BE": {
+    "languages": 3, "system_design": 5, "cloud_infra": 4, "ai_coding": 5,
+    "testing": 4, "security": 5, "algorithms": 2, "databases": 4,
+    "devops_ci": 4, "api_design": 5, "performance": 4, "architecture": 5,
+    "code_review": 4, "product_thinking": 4, "communication": 4, "leadership": 3
+  },
+  "PE": {
+    "languages": 3, "system_design": 5, "cloud_infra": 5, "ai_coding": 5,
+    "testing": 4, "security": 5, "algorithms": 2, "databases": 3,
+    "devops_ci": 5, "api_design": 3, "performance": 5, "architecture": 4,
+    "code_review": 4, "product_thinking": 3, "communication": 4, "leadership": 4
+  },
+  "AR": {
+    "languages": 3, "system_design": 5, "cloud_infra": 4, "ai_coding": 5,
+    "testing": 4, "security": 5, "algorithms": 2, "databases": 4,
+    "devops_ci": 4, "api_design": 5, "performance": 4, "architecture": 5,
+    "code_review": 5, "product_thinking": 5, "communication": 5, "leadership": 5
+  }
+}
