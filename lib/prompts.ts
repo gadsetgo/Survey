@@ -3,7 +3,7 @@ import type { SurveyState } from './types'
 export function buildPrompt(s: SurveyState): string {
   const technical = {
     'Data pipelines / ETL': s.skills.pipelines,
-    'SQL & query fluency': s.skills.sql,
+    'Query logic & analytical querying': s.skills.sql,
     'Python / scripting': s.skills.python,
     'Cloud platforms': s.skills.cloud,
     'AI / LLM tools': s.skills.ai_tools,
@@ -30,7 +30,6 @@ export function buildPrompt(s: SurveyState): string {
 
 USER PROFILE:
 - Roles: ${s.selectedRoles.join(', ') || 'Not specified'}
-- Industry: ${s.industry || 'Not specified'}
 - Seniority: ${s.seniority || 'Not specified'}
 - Years experience: ${s.yearsExperience || 'Not specified'}
 - Skill shape: ${s.skillShape || 'Not specified'}

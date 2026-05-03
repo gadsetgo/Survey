@@ -7,7 +7,9 @@
       "FE": "Frontend / UI Engineering",
       "BE": "Backend / API Engineering",
       "PE": "Platform / DevOps / SRE",
-      "AR": "Architecture & Tech Leadership"
+      "AR": "Architecture & Tech Leadership",
+      "ML": "AI & Machine Learning Engineering",
+      "QA": "Quality & Test Engineering"
     }
   },
   "FE": {
@@ -33,5 +35,17 @@
     "testing": 4, "security": 5, "algorithms": 2, "databases": 4,
     "devops_ci": 4, "api_design": 5, "performance": 4, "architecture": 5,
     "code_review": 5, "product_thinking": 5, "communication": 5, "leadership": 5
+  },
+  "ML": {
+    "languages": 4, "system_design": 4, "cloud_infra": 4, "ai_coding": 5,
+    "testing": 3, "security": 3, "algorithms": 4, "databases": 3,
+    "devops_ci": 4, "api_design": 3, "performance": 4, "architecture": 4,
+    "code_review": 3, "product_thinking": 4, "communication": 4, "leadership": 3
+  },
+  "QA": {
+    "languages": 3, "system_design": 3, "cloud_infra": 3, "ai_coding": 4,
+    "testing": 5, "security": 4, "algorithms": 2, "databases": 3,
+    "devops_ci": 4, "api_design": 3, "performance": 4, "architecture": 3,
+    "code_review": 4, "product_thinking": 4, "communication": 4, "leadership": 3
   }
 }

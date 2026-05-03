@@ -58,10 +58,19 @@ const CATEGORIES = [
 
 export default function RoleSelection({ dark = false, onNext, onBack }: Props) {
   const T = mkT(dark)
-  const { selectedRoles, toggleRole } = useSurveyStore()
+  const { selectedRoles, toggleRole, setSelectedCategories } = useSurveyStore()
   const selected = new Set(selectedRoles)
 
-  const toggle = (id: string) => toggleRole(id)
+  const toggle = (id: string) => {
+    toggleRole(id)
+    const newSelected = selected.has(id)
+      ? [...selectedRoles].filter((r) => r !== id)
+      : [...selectedRoles, id]
+    const activeCats = CATEGORIES
+      .filter((cat) => cat.roles.some((role) => newSelected.includes(role.id)))
+      .map((cat) => cat.id)
+    setSelectedCategories(activeCats)
+  }
   const canContinue = selected.size > 0
 
   return (

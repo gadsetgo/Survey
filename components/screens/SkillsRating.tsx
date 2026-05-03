@@ -19,7 +19,7 @@ const GROUPS = [
     sub: 'What you can build & operate',
     skills: [
       { key: 'pipelines' as SkillKey, label: 'Data pipelines / ETL' },
-      { key: 'sql'       as SkillKey, label: 'SQL & query fluency' },
+      { key: 'sql'       as SkillKey, label: 'Query Logic (SQL)' },
       { key: 'python'    as SkillKey, label: 'Python / scripting' },
       { key: 'cloud'     as SkillKey, label: 'Cloud platforms' },
       { key: 'ai_tools'  as SkillKey, label: 'AI / LLM tools' },

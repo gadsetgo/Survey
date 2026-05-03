@@ -64,11 +64,11 @@ export default function Processing({ dark = false, onDone }: Props) {
       <div style={{ position: 'relative', marginBottom: 40 }}>
         <div className="animate-orb" style={{
           width: 96, height: 96, borderRadius: '50%',
-          border: '2px solid #e88c2a',
+          border: `2px solid ${dark ? '#7a4d1e' : '#e88c2a'}`,
         }} />
         <div className="animate-orb" style={{
           position: 'absolute', inset: 12, borderRadius: '50%',
-          border: '2px solid #f5d48a',
+          border: `2px solid ${dark ? '#4a3218' : '#f5d48a'}`,
           animationDelay: '0.3s',
         }} />
       </div>

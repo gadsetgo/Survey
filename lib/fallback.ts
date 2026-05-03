@@ -5,7 +5,7 @@ const DEMAND_BY_CATEGORY: Record<string, Skills> = DATA_CONSENSUS as unknown as 
 
 const SKILL_LABELS: Record<SkillKey, string> = {
   pipelines:    'Data Pipelines',
-  sql:          'SQL',
+  sql:          'Query Logic',
   python:       'Python',
   cloud:        'Cloud Platforms',
   ai_tools:     'AI / LLM Tools',
@@ -97,6 +97,14 @@ function makeRoadmapStep(key: SkillKey, band: 'quick' | 'core' | 'pivot'): Roadm
 export function buildFallbackResults(survey: SurveyState): ApiResponse {
   const primaryCategory = survey.selectedCategories[0] ?? 'AN'
   const demand_levels: Skills = { ...(DEMAND_BY_CATEGORY[primaryCategory] ?? DEMAND_BY_CATEGORY['AN']) }
+
+  const seniority = survey.seniority ?? ''
+  if (['Senior', 'Lead', 'Principal', 'Staff'].some((s) => seniority.includes(s))) {
+    demand_levels.stakeholders = Math.min(5, demand_levels.stakeholders + 1)
+    demand_levels.strategic    = Math.min(5, demand_levels.strategic + 1)
+    demand_levels.framing      = Math.min(5, demand_levels.framing + 1)
+  }
+
   const skillKeys = Object.keys(demand_levels) as SkillKey[]
 
   const gap_analysis = Object.fromEntries(

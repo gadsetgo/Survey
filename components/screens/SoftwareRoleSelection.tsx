@@ -47,12 +47,31 @@ const CATEGORIES = [
     id: 'AR', color: '#e88c2a', label: 'ARCHITECT', title: 'Architecture & Leadership',
     roles: [
       { id: 'fullstack-dev',  label: 'Full-stack Developer' },
-      { id: 'ml-infra-eng',   label: 'ML / AI Engineer' },
       { id: 'product-eng',    label: 'Product Engineer' },
       { id: 'staff-eng',      label: 'Staff / Principal Engineer' },
       { id: 'eng-manager',    label: 'Engineering Manager' },
       { id: 'vp-engineering', label: 'VP / Head of Engineering' },
       { id: 'cto',            label: 'CTO / Technical Co-founder' },
+    ],
+  },
+  {
+    id: 'ML', color: '#2d7dd2', label: 'AI / ML', title: 'AI & Machine Learning',
+    roles: [
+      { id: 'ml-engineer',     label: 'ML Engineer' },
+      { id: 'llm-engineer',    label: 'LLM / GenAI Engineer' },
+      { id: 'ai-researcher',   label: 'AI Researcher' },
+      { id: 'mlops-engineer',  label: 'MLOps Engineer' },
+      { id: 'ai-product-eng',  label: 'AI Product Engineer' },
+    ],
+  },
+  {
+    id: 'QA', color: '#6b4f8e', label: 'QUALITY', title: 'Quality & Test Engineering',
+    roles: [
+      { id: 'qa-engineer',     label: 'QA Engineer' },
+      { id: 'sdet',            label: 'SDET / Automation Engineer' },
+      { id: 'qa-lead',         label: 'QA Lead' },
+      { id: 'perf-engineer',   label: 'Performance Test Engineer' },
+      { id: 'ai-safety-tester',label: 'AI Safety Tester' },
     ],
   },
 ]
@@ -99,7 +118,7 @@ export default function SoftwareRoleSelection({ dark = false, onNext, onBack }: 
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, marginBottom: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6, marginBottom: 24 }}>
           {CATEGORIES.map((cat) => (
             <div key={cat.id} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 10px', border: `1px solid ${T.rule}`, borderRadius: 999 }}>
               <span style={{ width: 10, height: 10, borderRadius: '50%', background: cat.color, flexShrink: 0 }} />

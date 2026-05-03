@@ -58,8 +58,8 @@ export default function SoftwareProcessing({ dark = false, onDone }: Props) {
       padding: '0 24px',
     }}>
       <div style={{ position: 'relative', marginBottom: 40 }}>
-        <div className="animate-orb" style={{ width: 96, height: 96, borderRadius: '50%', border: '2px solid #1d7a6b' }} />
-        <div className="animate-orb" style={{ position: 'absolute', inset: 12, borderRadius: '50%', border: '2px solid #5c4db1', animationDelay: '0.3s' }} />
+        <div className="animate-orb" style={{ width: 96, height: 96, borderRadius: '50%', border: `2px solid ${dark ? '#1a4d44' : '#1d7a6b'}` }} />
+        <div className="animate-orb" style={{ position: 'absolute', inset: 12, borderRadius: '50%', border: `2px solid ${dark ? '#3d2e6e' : '#5c4db1'}`, animationDelay: '0.3s' }} />
       </div>
       <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 22, textAlign: 'center', marginBottom: 32, letterSpacing: '-0.02em' }}>
         {STEPS[activeStep]}

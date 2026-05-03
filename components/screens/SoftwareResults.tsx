@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useSoftwareSurveyStore } from '@/lib/software-store'
 import { buildSoftwareAIPrompt, SKILL_LABELS as SW_LABELS } from '@/lib/software-fallback'
 import type { SoftwareSkillKey, SoftwareSkills } from '@/lib/software-types'
+import { resolveUrl } from '@/lib/resource-urls'
 import FeedbackBar from '@/components/FeedbackBar'
 
 interface Props {
@@ -35,6 +36,14 @@ const CATEGORY_COLORS: Record<SoftwareSkillKey, string> = {
   api_design: '#e88c2a', performance: '#e88c2a', architecture: '#e88c2a',
   // SL group — purple
   code_review: '#5c4db1', product_thinking: '#5c4db1', communication: '#5c4db1', leadership: '#5c4db1',
+}
+
+const CONCERN_LABELS: Record<string, string> = {
+  automation:  'ROLE AT RISK',
+  'ai-skills': 'FALLING BEHIND ON AI',
+  ceiling:     'HIT A CEILING',
+  pivot:       'WANT TO PIVOT',
+  ahead:       'STAYING AHEAD',
 }
 
 const DEST_STYLE: Record<string, { label: string; color: string; bg: string }> = {
@@ -71,13 +80,7 @@ export default function SoftwareResults({ dark = false, onRestart }: Props) {
         <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 0 14px' }}>
           <button onClick={onRestart} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 24, color: T.fg, padding: 0, lineHeight: 1 }}>←</button>
           <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', color: T.muted }}>YOUR MAP · SW TRACK</span>
-          <button
-            className="no-print"
-            onClick={() => window.print()}
-            style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', padding: '6px 10px', border: `1px solid ${T.rule}`, borderRadius: 999, background: 'transparent', color: T.fg, cursor: 'pointer' }}
-          >
-            PRINT ↗
-          </button>
+          <span style={{ width: 60 }} />
         </header>
 
         <div style={{ marginBottom: 24 }}>
@@ -92,6 +95,19 @@ export default function SoftwareResults({ dark = false, onRestart }: Props) {
               ? `${gapCount} urgent gap${gapCount > 1 ? 's' : ''} to close. ${aligned} skill${aligned !== 1 ? 's' : ''} already aligned with 2027 demand.`
               : `Strong alignment overall. ${aligned} skills match 2027 demand.`}
           </p>
+          {store.concerns && store.concerns.length > 0 && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 14 }}>
+              {store.concerns.map((c) => (
+                <span key={c} style={{
+                  fontSize: 10, fontWeight: 600, letterSpacing: '0.12em',
+                  padding: '4px 10px', borderRadius: 999,
+                  border: `1px solid ${T.rule}`, color: T.muted,
+                }}>
+                  {CONCERN_LABELS[c] ?? c.toUpperCase()}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Spider chart */}
@@ -165,15 +181,23 @@ export default function SoftwareResults({ dark = false, onRestart }: Props) {
         <div style={{ marginBottom: 28 }}>
           <SectionHeader num="03" label="SUGGESTED RESOURCES" T={T} />
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            {results.roadmap.quick_wins.slice(0, 3).map((step, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px', border: `1px solid ${T.rule}`, borderRadius: 8 }}>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 9, fontWeight: 600, letterSpacing: '0.14em', color: T.muted, marginBottom: 2 }}>QUICK WIN</div>
-                  <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: '-0.01em', color: T.fg }}>{step.title}</div>
-                </div>
-                <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 18, color: T.fg }}>↗</span>
-              </div>
-            ))}
+            {results.roadmap.quick_wins.slice(0, 3).map((step, i) => {
+              const resourceName = step.resources[0]
+              const url = resourceName ? resolveUrl(resourceName) : undefined
+              return (
+                <a key={i} href={url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'block' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px', border: '1px solid #1d7a6b', borderRadius: 8 }}>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 9, fontWeight: 600, letterSpacing: '0.14em', color: T.muted, marginBottom: 2 }}>
+                        {resourceName ?? 'QUICK WIN'}
+                      </div>
+                      <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: '-0.01em', color: T.fg }}>{step.title}</div>
+                    </div>
+                    <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 18, color: '#1d7a6b' }}>↗</span>
+                  </div>
+                </a>
+              )
+            })}
           </div>
         </div>
 
@@ -184,7 +208,7 @@ export default function SoftwareResults({ dark = false, onRestart }: Props) {
             <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14, color: T.fg, marginBottom: 12 }}>Your competitive foundation</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {results.skills_to_protect.map((sk) => (
-                <span key={sk} style={{ fontSize: 12, fontWeight: 500, padding: '6px 12px', borderRadius: 999, background: '#e4f0e8', color: '#3d6b4f' }}>{sk}</span>
+                <span key={sk} style={{ fontSize: 12, fontWeight: 500, padding: '6px 12px', borderRadius: 999, border: '1px solid #1d7a6b', color: '#1d7a6b', background: 'transparent' }}>{sk}</span>
               ))}
             </div>
           </div>
@@ -224,27 +248,35 @@ export default function SoftwareResults({ dark = false, onRestart }: Props) {
               }}>
                 {aiPrompt}
               </pre>
-              <div style={{ display: 'flex', gap: 8 }}>
-                <button
-                  onClick={() => navigator.clipboard?.writeText(aiPrompt)}
-                  style={{
-                    flex: 1, padding: '12px', border: '1px solid rgba(253,248,240,0.3)', borderRadius: 8,
-                    background: 'transparent', color: '#fdf8f0', cursor: 'pointer',
-                    fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 500,
-                  }}
-                >
-                  Copy prompt ↗
-                </button>
-                <button
-                  onClick={() => window.print()}
-                  style={{
-                    flex: 1, padding: '12px', border: '1px solid rgba(253,248,240,0.3)', borderRadius: 8,
-                    background: 'transparent', color: '#fdf8f0', cursor: 'pointer',
-                    fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 500,
-                  }}
-                >
-                  Print results ↗
-                </button>
+              <button
+                onClick={() => navigator.clipboard?.writeText(aiPrompt)}
+                style={{
+                  width: '100%', padding: '12px', border: '1px solid rgba(253,248,240,0.3)', borderRadius: 8,
+                  background: 'transparent', color: '#fdf8f0', cursor: 'pointer',
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 500,
+                  marginBottom: 10,
+                }}
+              >
+                Copy prompt ↗
+              </button>
+              <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', color: 'rgba(253,248,240,0.6)', marginBottom: 8 }}>
+                PASTE INTO AN AI ASSISTANT
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+                {[
+                  { label: 'Claude', href: 'https://claude.ai/new' },
+                  { label: 'ChatGPT', href: 'https://chatgpt.com/' },
+                  { label: 'Gemini', href: 'https://gemini.google.com/' },
+                  { label: 'Search it', href: `https://www.google.com/search?q=${encodeURIComponent('12 month software engineering career roadmap ' + (store.selectedRoles[0] ?? ''))}` },
+                ].map(({ label, href }) => (
+                  <a key={label} href={href} target="_blank" rel="noopener noreferrer" style={{
+                    display: 'block', padding: '10px', borderRadius: 8, textAlign: 'center',
+                    background: 'rgba(253,248,240,0.12)', color: '#fdf8f0', textDecoration: 'none',
+                    fontSize: 12, fontWeight: 600, fontFamily: "'DM Sans', sans-serif",
+                  }}>
+                    {label} ↗
+                  </a>
+                ))}
               </div>
             </div>
           )}
