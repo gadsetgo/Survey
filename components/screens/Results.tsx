@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useSurveyStore } from '@/lib/store'
 import type { SkillKey, Skills, SurveyState, ApiResponse } from '@/lib/types'
+import { resolveUrl } from '@/lib/resource-urls'
 import FeedbackBar from '@/components/FeedbackBar'
 
 interface Props {
@@ -16,7 +17,7 @@ const mkT = (dark: boolean) => dark
 
 // 16 skill labels for spider axes
 const SKILL_LABELS: Record<SkillKey, string> = {
-  pipelines: 'Pipelines', sql: 'SQL', python: 'Python', cloud: 'Cloud',
+  pipelines: 'Pipelines', sql: 'Query', python: 'Python', cloud: 'Cloud',
   ai_tools: 'AI/LLM', modeling: 'Modeling',
   governance: 'Govern.', dq: 'Quality', metadata: 'Metadata',
   bi_delivery: 'BI', compliance: 'Compliance', domain: 'Domain',
@@ -29,6 +30,14 @@ const CATEGORY_COLORS: Record<SkillKey, string> = {
   pipelines: '#1d7a6b', sql: '#1d7a6b', python: '#1d7a6b', cloud: '#1d7a6b', ai_tools: '#1d7a6b', modeling: '#1d7a6b',
   governance: '#e88c2a', dq: '#e88c2a', metadata: '#e88c2a', bi_delivery: '#e88c2a', compliance: '#e88c2a', domain: '#e88c2a',
   stakeholders: '#5c4db1', framing: '#5c4db1', storytelling: '#5c4db1', strategic: '#5c4db1',
+}
+
+const CONCERN_LABELS: Record<string, string> = {
+  automation:  'ROLE AT RISK',
+  'ai-skills': 'FALLING BEHIND ON AI',
+  ceiling:     'HIT A CEILING',
+  pivot:       'WANT TO PIVOT',
+  ahead:       'STAYING AHEAD',
 }
 
 const DEST_STYLE: Record<string, { label: string; color: string; bg: string }> = {
@@ -77,12 +86,7 @@ export default function Results({ dark = false, onRestart }: Props) {
         <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 0 14px' }}>
           <button onClick={onRestart} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 24, color: T.fg, padding: 0, lineHeight: 1 }}>←</button>
           <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', color: T.muted }}>YOUR MAP · 04 / 04</span>
-          <button
-            onClick={() => window.print()}
-            className="no-print"
-            style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', padding: '6px 10px', border: `1px solid ${T.rule}`, borderRadius: 999, background: 'transparent', color: T.fg, cursor: 'pointer' }}>
-            PRINT ↗
-          </button>
+          <span style={{ width: 60 }} />
         </header>
 
         {/* Hero */}
@@ -101,6 +105,19 @@ export default function Results({ dark = false, onRestart }: Props) {
               ? `${gapCount} urgent gap${gapCount > 1 ? 's' : ''} to close before 2027. ${aligned} skill${aligned !== 1 ? 's' : ''} already aligned.`
               : `Strong alignment overall. ${aligned} skill${aligned !== 1 ? 's' : ''} match 2027 demand.`}
           </p>
+          {store.concerns.length > 0 && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 14 }}>
+              {store.concerns.map((c) => (
+                <span key={c} style={{
+                  fontSize: 10, fontWeight: 600, letterSpacing: '0.12em',
+                  padding: '4px 10px', borderRadius: 999,
+                  border: `1px solid ${T.rule}`, color: T.muted,
+                }}>
+                  {CONCERN_LABELS[c] ?? c.toUpperCase()}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Spider chart */}
@@ -181,19 +198,25 @@ export default function Results({ dark = false, onRestart }: Props) {
         <div style={{ marginBottom: 28 }}>
           <SectionHeader num="03" label="SUGGESTED RESOURCES" T={T} />
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            {results.roadmap.quick_wins.slice(0, 3).map((step, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px', border: `1px solid ${T.rule}`, borderRadius: 8 }}>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 9, fontWeight: 600, letterSpacing: '0.14em', color: T.muted, marginBottom: 2 }}>
-                    {step.resources[0] ? 'RESOURCE' : 'QUICK WIN'}
+            {results.roadmap.quick_wins.slice(0, 3).map((step, i) => {
+              const resourceName = step.resources[0]
+              const url = resourceName ? resolveUrl(resourceName) : undefined
+              return (
+                <a key={i} href={url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'block' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px', border: '1px solid #1d7a6b', borderRadius: 8 }}>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 9, fontWeight: 600, letterSpacing: '0.14em', color: T.muted, marginBottom: 2 }}>
+                        {resourceName ?? 'QUICK WIN'}
+                      </div>
+                      <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: '-0.01em', color: T.fg }}>
+                        {step.title}
+                      </div>
+                    </div>
+                    <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 18, color: '#1d7a6b' }}>↗</span>
                   </div>
-                  <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: '-0.01em', color: T.fg }}>
-                    {step.title}
-                  </div>
-                </div>
-                <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 18, color: T.fg }}>↗</span>
-              </div>
-            ))}
+                </a>
+              )
+            })}
           </div>
         </div>
 
@@ -230,27 +253,35 @@ export default function Results({ dark = false, onRestart }: Props) {
                 color: '#fdf8f0', margin: '0 0 12px', maxHeight: 320, overflowY: 'auto',
                 fontFamily: "'DM Sans', sans-serif",
               }}>{aiPrompt}</pre>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-                <button
-                  onClick={() => navigator.clipboard?.writeText(aiPrompt)}
-                  style={{
-                    padding: '12px', border: '1px solid rgba(253,248,240,0.3)', borderRadius: 8,
-                    background: 'transparent', color: '#fdf8f0', cursor: 'pointer',
-                    fontSize: 13, fontWeight: 500, fontFamily: "'DM Sans', sans-serif",
-                  }}
-                >
-                  Copy prompt
-                </button>
-                <button
-                  onClick={() => window.print()}
-                  style={{
-                    padding: '12px', border: 'none', borderRadius: 8,
-                    background: '#fdf8f0', color: '#1a1410', cursor: 'pointer',
-                    fontSize: 13, fontWeight: 500, fontFamily: "'DM Sans', sans-serif",
-                  }}
-                >
-                  Print results
-                </button>
+              <button
+                onClick={() => navigator.clipboard?.writeText(aiPrompt)}
+                style={{
+                  width: '100%', padding: '12px', border: '1px solid rgba(253,248,240,0.3)', borderRadius: 8,
+                  background: 'transparent', color: '#fdf8f0', cursor: 'pointer',
+                  fontSize: 13, fontWeight: 500, fontFamily: "'DM Sans', sans-serif",
+                  marginBottom: 10,
+                }}
+              >
+                Copy prompt ↗
+              </button>
+              <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', color: 'rgba(253,248,240,0.6)', marginBottom: 8 }}>
+                PASTE INTO AN AI ASSISTANT
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+                {[
+                  { label: 'Claude', href: 'https://claude.ai/new' },
+                  { label: 'ChatGPT', href: 'https://chatgpt.com/' },
+                  { label: 'Gemini', href: 'https://gemini.google.com/' },
+                  { label: 'Search it', href: `https://www.google.com/search?q=${encodeURIComponent('12 month data career roadmap ' + (store.selectedRoles[0] ?? ''))}` },
+                ].map(({ label, href }) => (
+                  <a key={label} href={href} target="_blank" rel="noopener noreferrer" style={{
+                    display: 'block', padding: '10px', borderRadius: 8, textAlign: 'center',
+                    background: 'rgba(253,248,240,0.12)', color: '#fdf8f0', textDecoration: 'none',
+                    fontSize: 12, fontWeight: 600, fontFamily: "'DM Sans', sans-serif",
+                  }}>
+                    {label} ↗
+                  </a>
+                ))}
               </div>
             </div>
           )}
@@ -296,7 +327,7 @@ export default function Results({ dark = false, onRestart }: Props) {
               {results.skills_to_protect.map((sk) => (
                 <span key={sk} style={{
                   fontSize: 12, fontWeight: 500, padding: '6px 12px', borderRadius: 999,
-                  background: '#e4f0e8', color: '#3d6b4f',
+                  border: '1px solid #1d7a6b', color: '#1d7a6b', background: 'transparent',
                 }}>
                   {sk}
                 </span>
@@ -404,22 +435,64 @@ function SectionHeader({ num, label, T }: { num: string; label: string; T: Retur
   )
 }
 
+const LEVEL_DESC = ['no exposure', 'beginner', 'some experience', 'proficient', 'advanced', 'expert']
+
 function buildAIPrompt(store: SurveyState, results: ApiResponse): string {
-  const topGaps = Object.entries(results.gap_analysis)
-    .filter(([, v]) => v === 'urgent_gap')
-    .map(([k]) => k)
-    .join(', ')
+  const concerns = store.concerns.join(', ') || 'none specified'
 
-  return `I am a ${store.selectedRoles.join(', ')} with ${store.yearsExperience} years of experience, ${store.seniority} level, ${store.skillShape}-shaped profile.
+  const urgentGaps = SKILL_KEYS.filter((k) => results.gap_analysis[k] === 'urgent_gap')
+  const atRiskKeys = SKILL_KEYS.filter((k) => results.gap_analysis[k] === 'at_risk')
+  const alignedKeys = SKILL_KEYS.filter((k) => results.gap_analysis[k] === 'aligned')
 
-My top skill gaps against 2027 demand are: ${topGaps || 'none identified'}.
-Skills to protect: ${results.skills_to_protect.join(', ')}.
-Target role destinations: ${results.role_destinations.map((d) => d.title).join(', ')}.
+  const formatSkill = (k: SkillKey) => {
+    const cur = store.skills[k], dem = results.demand_levels[k]
+    const gap = dem - cur
+    return `  - ${SKILL_LABELS[k]}: currently ${cur}/5 (${LEVEL_DESC[cur]}) → need ${dem}/5 (${LEVEL_DESC[dem]})${gap > 0 ? ` — gap: +${gap}` : ' — at target'}`
+  }
 
-Please build me a detailed 12-month learning roadmap structured around:
-- Quick wins (first 90 days): specific courses, projects, or credentials
-- Core skill builds (months 3–6): depth work on my biggest gaps
-- Role transition enablers (months 6–12): what gets me to my stretch destination
+  const urgentBlock = urgentGaps.length
+    ? urgentGaps.map(formatSkill).join('\n')
+    : '  (none)'
+  const atRiskBlock = atRiskKeys.length
+    ? atRiskKeys.map(formatSkill).join('\n')
+    : '  (none)'
+  const alignedBlock = alignedKeys.length
+    ? alignedKeys.map(formatSkill).join('\n')
+    : '  (none)'
 
-Format as a week-by-week or month-by-month plan with concrete resources (courses, books, communities). Be specific about time investment per week.`
+  return `You are a senior data career advisor using 2025–2027 labour market research (WEF Future of Jobs 2025, LinkedIn Economic Graph, Stanford HAI AI Index 2026, Gartner Data & Analytics Forecasts 2025).
+
+My profile:
+- Current role(s): ${store.selectedRoles.join(', ') || 'data professional'}
+- Skill shape: ${store.skillShape ?? 'not specified'}
+- Seniority: ${store.seniority ?? 'not specified'}
+- Years experience: ${store.yearsExperience ?? 'not specified'}
+- Target destination (12 months): ${results.role_destinations[0]?.title ?? 'not specified'}
+- Stretch goal (2–3 years): ${results.role_destinations[1]?.title ?? 'not specified'}
+- What I'm concerned about: ${concerns}
+
+My skill inventory (scale 1–5: 1=beginner, 3=proficient, 5=expert):
+
+URGENT GAPS — close these before 2027:
+${urgentBlock}
+
+AT RISK — need maintenance or moderate uplift:
+${atRiskBlock}
+
+ALREADY ALIGNED — protect and leverage these:
+${alignedBlock}
+
+IMPORTANT CALIBRATION: When recommending learning resources or plans for any skill, always match the content difficulty to my CURRENT level for that skill. If I am already at level 4 on a skill and only need level 5, do NOT recommend beginner resources — assume I have the foundations and focus on advanced techniques, edge cases, or real-world application. Only recommend foundational content for skills where I am at level 1–2.
+
+Task: Build me a personalised 12-month skill development roadmap grounded in the research above.
+
+Requirements:
+1. Month-by-month plan (or quarterly) — what to learn and what to build each period, calibrated to my existing level per skill
+2. For each gap skill, recommend 2 specific resources (books, courses, or practice sites) appropriate to my current level — include URLs where possible
+3. Identify which gaps AI tools can close faster — and how to use them effectively given my current proficiency
+4. Flag which skills are AI-resistant and why they remain high-value per the research
+5. Suggest 2–3 portfolio projects that signal these skills to a hiring manager
+6. Assume 5–8 hours/week available; be realistic about what's achievable
+
+Cite data sources (WEF, LinkedIn, Gartner, etc.) where relevant. Output as structured markdown.`
 }
